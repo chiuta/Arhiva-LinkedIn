@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Arhivă personală de postări LinkedIn salvate manual și galerie de postări publice prin embed oficial LinkedIn. Datele rămân în browser; galeria încarcă conținut de la LinkedIn.">
+<title>Arhivă &amp; Galerie LinkedIn — clipe salvate fără cont</title>
+<style>
+  :root {
+    --paper: #EDE6D6;
+    --paper-alt: #E3DAC5;
+    --ink: #24211A;
+    --ink-soft: #4B4636;
+    --folder: #D8C08A;
+    --folder-muted: #E0D2A8;
+    --stamp: #8B3A3A;
+    --accent: #2C4A6E;
+    --line: #C9BC9E;
+    --danger: #A33322;
+    --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    --radius: 6px;
+    --shadow: 0 1px 2px rgba(36,33,26,.08), 0 4px 14px rgba(36,33,26,.07);
+  }
+  [data-theme="dark"] {
+    --paper: #1B1912;
+    --paper-alt: #26221A;
+    --ink: #EDE6D6;
+    --ink-soft: #B8AE94;
+    --folder: #7A6533;
+    --folder-muted: #342D1C;
+    --stamp: #C77B7B;
+    --accent: #7FA6D6;
+    --line: #453E29;
+    --danger: #E08080;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 18px rgba(0,0,0,.35);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    transition: background .25s ease, color .25s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+  a { color: var(--accent); }
+  button, input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+  :focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
+
+  .site-header { padding: 2.5rem 1.5rem 1.5rem; text-align: center; border-bottom: 1px solid var(--line); }
+  .plate {
+    display: inline-block; padding: .4rem 1.2rem; margin-bottom: 1rem;
+    border: 1.5px solid var(--ink); outline: 1.5px solid var(--ink); outline-offset: 3px;
+    font-family: var(--mono); letter-spacing: .15em; text-transform: uppercase; font-size: .72rem;
+  }
+  h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.5rem); margin: 0 0 .4rem; letter-spacing: -.01em; }
+  .subtitle { font-family: var(--mono); color: var(--ink-soft); font-size: .82rem; margin: 0; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 0; }
+  .tab {
+    padding: .7rem 1.4rem; background: var(--folder-muted); border: 1px solid var(--line); border-bottom: none;
+    border-radius: 8px 8px 0 0; font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em;
+    font-size: .78rem; cursor: pointer; color: var(--ink-soft); position: relative; top: 1px;
+  }
+  .tab.active { background: var(--paper-alt); color: var(--ink); font-weight: 600; }
+  .tabs-controls { margin-left: auto; display: flex; gap: .5rem; align-items: center; }
+  .lang-select {
+    border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink-soft);
+    font-family: var(--mono); font-size: .72rem; text-transform: uppercase; padding: .4rem .5rem; cursor: pointer;
+  }
+  .theme-toggle {
+    background: none; border: 1px solid var(--line); border-radius: 50%;
+    width: 34px; height: 34px; cursor: pointer; font-size: 1rem; color: var(--ink-soft); flex-shrink: 0;
+  }
+  .tab-content-wrap { border-top: 1px solid var(--line); background: var(--paper-alt); min-height: 40vh; }
+
+  .toolbar { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.5rem; display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .search-input { flex: 1 1 200px; padding: .55rem .9rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink); }
+  .btn { padding: .55rem 1rem; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); border-radius: var(--radius); cursor: pointer; font-size: .82rem; white-space: nowrap; }
+  .btn.secondary { background: var(--paper); color: var(--ink); }
+
+  .tag-row { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 1rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .tag-chip {
+    font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .04em;
+    padding: .25rem .6rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper);
+    cursor: pointer; color: var(--ink-soft);
+  }
+  .tag-chip.active { background: var(--stamp); border-color: var(--stamp); color: var(--paper-alt); }
+
+  .card-grid { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.75rem; }
+  @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } .site-header { padding: 1.8rem 1rem 1.2rem; } }
+
+  .card { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem 1.2rem 1.1rem; box-shadow: var(--shadow); }
+  .stamp {
+    position: absolute; top: -11px; right: 14px; background: var(--paper);
+    border: 1px solid var(--stamp); outline: 1px solid var(--stamp); outline-offset: 2px;
+    color: var(--stamp); font-family: var(--mono); font-size: .7rem; letter-spacing: .05em;
+    text-transform: uppercase; padding: 3px 7px; transform: rotate(-3deg); border-radius: 2px; background-clip: padding-box;
+  }
+  .card-author { font-family: var(--serif); font-weight: 700; font-size: 1.05rem; margin: .3rem 0 .1rem; }
+  .card-title { margin: 0 0 .5rem; color: var(--ink-soft); font-size: .88rem; }
+  .card-content { font-size: .9rem; max-height: 6.4em; overflow: hidden; position: relative; margin-bottom: .3rem; }
+  .card-content.expanded { max-height: none; }
+  .card-content:not(.expanded)::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2.2em; background: linear-gradient(transparent, var(--paper)); }
+  .expand-btn { background: none; border: none; color: var(--accent); font-family: var(--mono); font-size: .72rem; text-transform: uppercase; cursor: pointer; padding: 0; margin-bottom: .5rem; display: inline-block; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
+  .card-tag { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; padding: .15rem .45rem; border: 1px solid var(--line); border-radius: 3px; color: var(--ink-soft); display: inline-block; transform: rotate(-1deg); }
+  .card-tag:nth-child(even) { transform: rotate(1deg); }
+  .card-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: .7rem; padding-top: .6rem; border-top: 1px dashed var(--line); }
+  .card-actions a, .card-actions button { background: none; border: none; color: var(--ink-soft); font-family: var(--mono); font-size: .68rem; text-transform: uppercase; cursor: pointer; padding: 0; text-decoration: none; }
+  .card-actions a:hover, .card-actions button:hover { color: var(--ink); text-decoration: underline; }
+
+  .embed-wrap { border-radius: 4px; overflow: hidden; border: 1px solid var(--line); margin-bottom: .3rem; background: var(--paper-alt); }
+  .embed-wrap iframe { width: 100%; display: block; border: none; }
+
+  .empty-state { max-width: 640px; margin: 0 auto; padding: 3.5rem 1.5rem; text-align: center; color: var(--ink-soft); }
+  .empty-state h2 { font-family: var(--serif); color: var(--ink); margin-bottom: .5rem; }
+
+  .fab { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 56px; height: 56px; border-radius: 50%; background: var(--stamp); color: var(--paper-alt); border: none; font-size: 1.6rem; line-height: 1; box-shadow: var(--shadow); cursor: pointer; z-index: 10; }
+
+  dialog { border: 1px solid var(--ink); border-radius: var(--radius); padding: 0; max-width: 520px; width: 90vw; background: var(--paper); color: var(--ink); box-shadow: var(--shadow); }
+  dialog::backdrop { background: rgba(20,18,12,.5); }
+  .dialog-inner { padding: 1.5rem; max-height: 85vh; overflow-y: auto; }
+  .dialog-inner h2 { font-family: var(--serif); margin-top: 0; }
+  .field { margin-bottom: 1rem; }
+  .field label { display: block; font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .3rem; color: var(--ink-soft); }
+  .field input, .field textarea { width: 100%; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-alt); color: var(--ink); }
+  .field textarea { min-height: 84px; resize: vertical; font-family: var(--sans); }
+  .field .hint { font-size: .74rem; color: var(--ink-soft); margin: .35rem 0 0; }
+  .error-msg { color: var(--danger); font-size: .82rem; margin: -.3rem 0 .8rem; }
+  .dialog-actions { display: flex; justify-content: flex-end; gap: .6rem; margin-top: 1.2rem; }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--paper); padding: .7rem 1.2rem; border-radius: var(--radius);
+    font-family: var(--mono); font-size: .78rem; opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease; z-index: 100; max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+  .site-footer { text-align: center; padding: 2rem 1.5rem 4rem; font-family: var(--mono); font-size: .7rem; color: var(--ink-soft); }
+</style>
+</head>
+<body data-theme="light">
+<noscript><p style="padding:1rem;font-family:sans-serif">Această aplicație necesită JavaScript. / This app requires JavaScript.</p></noscript>
+
+<header class="site-header">
+  <span class="plate" data-i18n="plate">Dosar personal · fără cont</span>
+  <h1 data-i18n="title">Arhivă &amp; Galerie LinkedIn</h1>
+  <p class="subtitle" data-i18n="subtitle">clipe salvate manual + postări publice prin embed oficial</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="archive" data-i18n="tabArchive" role="tab" aria-selected="true">Arhivă</button>
+  <button class="tab" data-tab="gallery" data-i18n="tabGallery" role="tab" aria-selected="false">Galerie</button>
+  <div class="tabs-controls">
+    <select id="langSelect" class="lang-select" aria-label="Language / Limbă">
+      <option value="ro">RO</option>
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="it">IT</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+      <option value="de">DE</option>
+    </select>
+    <button class="theme-toggle" id="themeToggle" data-i18n-title="themeToggleLabel" data-i18n-aria-label="themeToggleLabel" title="Comută tema" aria-label="Comută tema deschis/întunecat">◐</button>
+  </div>
+</nav>
+
+<div class="tab-content-wrap">
+  <div class="toolbar">
+    <input type="search" class="search-input" id="searchInput" data-i18n-placeholder="searchPlaceholder" data-i18n-aria-label="searchAriaLabel" placeholder="Caută..." aria-label="Caută în listă">
+    <select id="sortSelect" class="btn secondary" data-i18n-aria-label="sortAriaLabel" aria-label="Sortează după dată">
+      <option value="newest" data-i18n="sortNewest">Cele mai noi</option>
+      <option value="oldest" data-i18n="sortOldest">Cele mai vechi</option>
+    </select>
+    <button class="btn secondary" id="exportBtn" data-i18n="exportBtn">Descarcă backup</button>
+    <button class="btn secondary" id="importBtn" data-i18n="importBtn">Încarcă backup</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+  </div>
+  <div class="tag-row" id="tagRow"></div>
+  <div class="card-grid" id="cardGrid"></div>
+  <div class="empty-state" id="emptyState" hidden></div>
+</div>
+
+<button class="fab" id="fabAdd" data-i18n-aria-label="fabAddLabel" aria-label="Adaugă o clipire nouă">+</button>
+
+<footer class="site-footer">
+  <p data-i18n="footerText">Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.</p>
+</footer>
+
+<dialog id="entryDialog">
+  <div class="dialog-inner">
+    <h2 id="dialogTitle">Adaugă în arhivă</h2>
+    <form id="entryForm">
+      <div id="archiveFields">
+        <div class="field"><label for="f-url" data-i18n="fieldUrlLabel">Link postare / profil</label><input type="url" id="f-url" placeholder="https://www.linkedin.com/..."></div>
+        <div class="field"><label for="f-author" data-i18n="fieldAuthorLabel">Autor</label><input type="text" id="f-author" data-i18n-placeholder="fieldAuthorPlaceholder" placeholder="Nume autor"></div>
+        <div class="field"><label for="f-title" data-i18n="fieldTitleLabel">Titlu / rezumat (opțional)</label><input type="text" id="f-title"></div>
+        <div class="field"><label for="f-content" data-i18n="fieldContentLabel">Conținut</label><textarea id="f-content" data-i18n-placeholder="fieldContentPlaceholder" placeholder="Lipește aici textul postării pe care ai văzut-o deja..."></textarea></div>
+        <div class="field"><label for="f-date" data-i18n="fieldDateLabel">Data postării (opțional)</label><input type="date" id="f-date"></div>
+      </div>
+      <div id="galleryFields" hidden>
+        <div class="field">
+          <label for="f-embed" data-i18n="fieldEmbedLabel">Link postare sau cod embed</label>
+          <textarea id="f-embed" data-i18n-placeholder="fieldEmbedPlaceholder" placeholder="Lipește linkul postării publice SAU codul din &quot;Embed this post&quot;"></textarea>
+          <p class="hint" data-i18n="embedHint">Pe postarea publică → butonul „..." → „Embed this post" → copiază tot codul și lipește-l aici. Sau lipește doar linkul postării, îl convertesc automat.</p>
+        </div>
+        <div class="field"><label for="f-note" data-i18n="fieldNoteLabel">Notă (opțional)</label><input type="text" id="f-note"></div>
+      </div>
+      <div class="field"><label for="f-tags" data-i18n="fieldTagsLabel">Tag-uri (separate prin virgulă)</label><input type="text" id="f-tags" data-i18n-placeholder="fieldTagsPlaceholder" placeholder="carieră, IT, resurse"></div>
+      <p class="error-msg" id="formError" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn secondary" id="cancelBtn" data-i18n="cancelBtn">Anulează</button>
+        <button type="submit" class="btn" id="saveBtn" data-i18n="saveBtn">Salvează</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="confirmDialog">
+  <div class="dialog-inner">
+    <h2 data-i18n="confirmDeleteTitle">Ștergi definitiv?</h2>
+    <p data-i18n="confirmDeleteText">Această clipire va fi eliminată din listă. Acțiunea nu poate fi anulată.</p>
+    <div class="dialog-actions">
+      <button class="btn secondary" id="confirmCancel" data-i18n="cancelBtn">Anulează</button>
+      <button class="btn" id="confirmDeleteBtn" data-i18n="confirmDeleteBtn" style="background:var(--danger);border-color:var(--danger)">Șterge</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE = { archive: 'lka_archive_v1', gallery: 'lka_gallery_v1', theme: 'lka_theme_v1', lang: 'lka_lang_v1' };
+
+  var I18N = {
+    ro: {
+      locale: `ro-RO`,
+      plate: `Dosar personal · fără cont`,
+      title: `Arhivă & Galerie LinkedIn`,
+      subtitle: `clipe salvate manual + postări publice prin embed oficial`,
+      tabArchive: `Arhivă`,
+      tabGallery: `Galerie`,
+      themeToggleLabel: `Comută tema deschis/întunecat`,
+      searchPlaceholder: `Caută...`,
+      searchAriaLabel: `Caută în listă`,
+      sortAriaLabel: `Sortează după dată`,
+      sortNewest: `Cele mai noi`,
+      sortOldest: `Cele mai vechi`,
+      exportBtn: `Descarcă backup`,
+      importBtn: `Încarcă backup`,
+      tagAll: `Toate`,
+      fabAddLabel: `Adaugă o clipire nouă`,
+      footerText: `Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.`,
+      dialogTitleAddArchive: `Adaugă în arhivă`,
+      dialogTitleAddGallery: `Adaugă în galerie`,
+      dialogTitleEdit: `Editează`,
+      fieldUrlLabel: `Link postare / profil`,
+      fieldAuthorLabel: `Autor`,
+      fieldAuthorPlaceholder: `Nume autor`,
+      fieldTitleLabel: `Titlu / rezumat (opțional)`,
+      fieldContentLabel: `Conținut`,
+      fieldContentPlaceholder: `Lipește aici textul postării pe care ai văzut-o deja...`,
+      fieldDateLabel: `Data postării (opțional)`,
+      fieldEmbedLabel: `Link postare sau cod embed`,
+      fieldEmbedPlaceholder: `Lipește linkul postării publice SAU codul din „Embed this post"`,
+      embedHint: `Pe postarea publică → butonul „..." → „Embed this post" → copiază tot codul și lipește-l aici. Sau lipește doar linkul postării, îl convertesc automat.`,
+      fieldNoteLabel: `Notă (opțional)`,
+      fieldTagsLabel: `Tag-uri (separate prin virgulă)`,
+      fieldTagsPlaceholder: `carieră, IT, resurse`,
+      cancelBtn: `Anulează`,
+      saveBtn: `Salvează`,
+      confirmDeleteTitle: `Ștergi definitiv?`,
+      confirmDeleteText: `Această clipire va fi eliminată din listă. Acțiunea nu poate fi anulată.`,
+      confirmDeleteBtn: `Șterge`,
+      errorContentRequired: `Adaugă conținutul postării.`,
+      errorInvalidEmbed: `Nu am găsit un link LinkedIn valid. Lipește linkul postării publice sau codul complet din „Embed this post".`,
+      toastUpdated: `Actualizat.`,
+      toastSavedArchive: `Salvat în arhivă.`,
+      toastSavedGallery: `Salvat în galerie.`,
+      toastDeleted: `Șters.`,
+      toastBackupDownloaded: `Backup descărcat.`,
+      toastImportSuccess: `Import reușit: +{a} arhivă, +{g} galerie.`,
+      toastImportFail: `Fișierul nu conține date valide de backup.`,
+      toastStorageFail: `Nu am putut salva local (stocare indisponibilă).`,
+      emptyArchiveTitle: `Dosarul e gol`,
+      emptyArchiveText: `Lipește textul unei postări pe care ai văzut-o deja și arhiveaz-o aici, cu tag-uri și dată.`,
+      emptyGalleryTitle: `Galeria e goală`,
+      emptyGalleryText: `Adaugă prima postare publică folosind opțiunea oficială „Embed this post" din LinkedIn.`,
+      emptySearchTitle: `Nicio potrivire`,
+      emptySearchText: `Încearcă alt termen de căutare sau elimină filtrul de tag.`,
+      stampArchived: `Arhivat`,
+      stampSaved: `Salvat`,
+      authorUnknown: `Autor necunoscut`,
+      expand: `Extinde`,
+      collapse: `Restrânge`,
+      openOriginal: `Deschide original`,
+      editAction: `Editează`,
+      deleteAction: `Șterge`,
+      embedIframeTitle: `Postare LinkedIn încorporată`
+    },
+    en: {
+      locale: `en-GB`,
+      plate: `Personal file · no account needed`,
+      title: `LinkedIn Archive & Gallery`,
+      subtitle: `manually saved posts + public posts via official embed`,
+      tabArchive: `Archive`,
+      tabGallery: `Gallery`,
+      themeToggleLabel: `Toggle light/dark theme`,
+      searchPlaceholder: `Search...`,
+      searchAriaLabel: `Search the list`,
+      sortAriaLabel: `Sort by date`,
+      sortNewest: `Newest first`,
+      sortOldest: `Oldest first`,
+      exportBtn: `Download backup`,
+      importBtn: `Load backup`,
+      tagAll: `All`,
+      fabAddLabel: `Add a new entry`,
+      footerText: `Your data (archive, links, notes) stays in this browser (localStorage); the app has no server and no analytics. Note: each post in the Gallery is loaded from LinkedIn (official embed iframe), so LinkedIn receives your IP address and the address of the displayed post, and may set its own cookies inside that frame.`,
+      dialogTitleAddArchive: `Add to archive`,
+      dialogTitleAddGallery: `Add to gallery`,
+      dialogTitleEdit: `Edit`,
+      fieldUrlLabel: `Post / profile link`,
+      fieldAuthorLabel: `Author`,
+      fieldAuthorPlaceholder: `Author name`,
+      fieldTitleLabel: `Title / summary (optional)`,
+      fieldContentLabel: `Content`,
+      fieldContentPlaceholder: `Paste the text of the post you already viewed...`,
+      fieldDateLabel: `Post date (optional)`,
+      fieldEmbedLabel: `Post link or embed code`,
+      fieldEmbedPlaceholder: `Paste the public post link OR the code from "Embed this post"`,
+      embedHint: `On the public post → the "…" button → "Embed this post" → copy the whole code and paste it here. Or just paste the post link — it converts automatically.`,
+      fieldNoteLabel: `Note (optional)`,
+      fieldTagsLabel: `Tags (comma-separated)`,
+      fieldTagsPlaceholder: `career, IT, resources`,
+      cancelBtn: `Cancel`,
+      saveBtn: `Save`,
+      confirmDeleteTitle: `Delete permanently?`,
+      confirmDeleteText: `This entry will be removed from the list. This action cannot be undone.`,
+      confirmDeleteBtn: `Delete`,
+      errorContentRequired: `Add the content of the post.`,
+      errorInvalidEmbed: `No valid LinkedIn link found. Paste the public post link or the full code from "Embed this post".`,
+      toastUpdated: `Updated.`,
+      toastSavedArchive: `Saved to archive.`,
+      toastSavedGallery: `Saved to gallery.`,
+      toastDeleted: `Deleted.`,
+      toastBackupDownloaded: `Backup downloaded.`,
+      toastImportSuccess: `Import successful: +{a} archive, +{g} gallery.`,
+      toastImportFail: `The file does not contain valid backup data.`,
+      toastStorageFail: `Could not save locally (storage unavailable).`,
+      emptyArchiveTitle: `The archive is empty`,
+      emptyArchiveText: `Paste the text of a post you already viewed and archive it here, with tags and a date.`,
+      emptyGalleryTitle: `The gallery is empty`,
+      emptyGalleryText: `Add your first public post using LinkedIn's official "Embed this post" option.`,
+      emptySearchTitle: `No matches`,
+      emptySearchText: `Try a different search term or clear the tag filter.`,
+      stampArchived: `Archived`,
+      stampSaved: `Saved`,
+      authorUnknown: `Unknown author`,
+      expand: `Expand`,
+      collapse: `Collapse`,
+      openOriginal: `Open original`,
+      editAction: `Edit`,
+      deleteAction: `Delete`,
+      embedIframeTitle: `Embedded LinkedIn post`
+    },
+    fr: {
+      locale: `fr-FR`,
+      plate: `Dossier personnel · sans compte`,
+      title: `Archive & Galerie LinkedIn`,
+      subtitle: `publications enregistrées manuellement + publications publiques via l'intégration officielle`,
+      tabArchive: `Archive`,
+      tabGallery: `Galerie`,
+      themeToggleLabel: `Changer le thème clair/sombre`,
+      searchPlaceholder: `Rechercher...`,
+      searchAriaLabel: `Rechercher dans la liste`,
+      sortAriaLabel: `Trier par date`,
+      sortNewest: `Plus récent`,
+      sortOldest: `Plus ancien`,
+      exportBtn: `Télécharger la sauvegarde`,
+      importBtn: `Charger une sauvegarde`,
+      tagAll: `Tous`,
+      fabAddLabel: `Ajouter une nouvelle entrée`,
+      footerText: `Vos données (archive, liens, notes) restent dans ce navigateur (localStorage) ; l'application n'a ni serveur ni statistiques. Attention : chaque publication de la Galerie est chargée depuis LinkedIn (iframe officiel) ; LinkedIn reçoit donc votre adresse IP et l'adresse de la publication affichée, et peut déposer ses propres cookies dans ce cadre.`,
+      dialogTitleAddArchive: `Ajouter à l'archive`,
+      dialogTitleAddGallery: `Ajouter à la galerie`,
+      dialogTitleEdit: `Modifier`,
+      fieldUrlLabel: `Lien de la publication / du profil`,
+      fieldAuthorLabel: `Auteur`,
+      fieldAuthorPlaceholder: `Nom de l'auteur`,
+      fieldTitleLabel: `Titre / résumé (facultatif)`,
+      fieldContentLabel: `Contenu`,
+      fieldContentPlaceholder: `Collez ici le texte de la publication que vous avez déjà consultée...`,
+      fieldDateLabel: `Date de publication (facultatif)`,
+      fieldEmbedLabel: `Lien de la publication ou code d'intégration`,
+      fieldEmbedPlaceholder: `Collez le lien de la publication publique OU le code de "Embed this post"`,
+      embedHint: `Sur la publication publique → le bouton « … » → « Embed this post » → copiez tout le code et collez-le ici. Ou collez simplement le lien de la publication, il sera converti automatiquement.`,
+      fieldNoteLabel: `Note (facultatif)`,
+      fieldTagsLabel: `Étiquettes (séparées par des virgules)`,
+      fieldTagsPlaceholder: `carrière, IT, ressources`,
+      cancelBtn: `Annuler`,
+      saveBtn: `Enregistrer`,
+      confirmDeleteTitle: `Supprimer définitivement ?`,
+      confirmDeleteText: `Cette entrée sera retirée de la liste. Cette action est irréversible.`,
+      confirmDeleteBtn: `Supprimer`,
+      errorContentRequired: `Ajoutez le contenu de la publication.`,
+      errorInvalidEmbed: `Aucun lien LinkedIn valide trouvé. Collez le lien de la publication publique ou le code complet de "Embed this post".`,
+      toastUpdated: `Mis à jour.`,
+      toastSavedArchive: `Enregistré dans l'archive.`,
+      toastSavedGallery: `Enregistré dans la galerie.`,
+      toastDeleted: `Supprimé.`,
+      toastBackupDownloaded: `Sauvegarde téléchargée.`,
+      toastImportSuccess: `Import réussi : +{a} archive, +{g} galerie.`,
+      toastImportFail: `Le fichier ne contient pas de données de sauvegarde valides.`,
+      toastStorageFail: `Impossible d'enregistrer localement (stockage indisponible).`,
+      emptyArchiveTitle: `L'archive est vide`,
+      emptyArchiveText: `Collez le texte d'une publication que vous avez déjà consultée et archivez-la ici, avec des étiquettes et une date.`,
+      emptyGalleryTitle: `La galerie est vide`,
+      emptyGalleryText: `Ajoutez votre première publication publique via l'option officielle "Embed this post" de LinkedIn.`,
+      emptySearchTitle: `Aucun résultat`,
+      emptySearchText: `Essayez un autre terme de recherche ou retirez le filtre d'étiquette.`,
+      stampArchived: `Archivé`,
+      stampSaved: `Enregistré`,
+      authorUnknown: `Auteur inconnu`,
+      expand: `Développer`,
+      collapse: `Réduire`,
+      openOriginal: `Ouvrir l'original`,
+      editAction: `Modifier`,
+      deleteAction: `Supprimer`,
+      embedIframeTitle: `Publication LinkedIn intégrée`
+    },
+    it: {
+      locale: `it-IT`,
+      plate: `Archivio personale · senza account`,
+      title: `Archivio e Galleria LinkedIn`,
+      subtitle: `post salvati manualmente + post pubblici tramite embed ufficiale`,
+      tabArchive: `Archivio`,
+      tabGallery: `Galleria`,
+      themeToggleLabel: `Cambia tema chiaro/scuro`,
+      searchPlaceholder: `Cerca...`,
+      searchAriaLabel: `Cerca nell'elenco`,
+      sortAriaLabel: `Ordina per data`,
+      sortNewest: `Più recenti`,
+      sortOldest: `Meno recenti`,
+      exportBtn: `Scarica backup`,
+      importBtn: `Carica backup`,
+      tagAll: `Tutti`,
+      fabAddLabel: `Aggiungi una nuova voce`,
+      footerText: `I tuoi dati (archivio, link, note) restano in questo browser (localStorage); l'app non ha server né statistiche. Attenzione: ogni post della Galleria viene caricato da LinkedIn (iframe ufficiale), quindi LinkedIn riceve il tuo indirizzo IP e l'indirizzo del post mostrato e può impostare propri cookie in quel riquadro.`,
+      dialogTitleAddArchive: `Aggiungi all'archivio`,
+      dialogTitleAddGallery: `Aggiungi alla galleria`,
+      dialogTitleEdit: `Modifica`,
+      fieldUrlLabel: `Link del post / profilo`,
+      fieldAuthorLabel: `Autore`,
+      fieldAuthorPlaceholder: `Nome dell'autore`,
+      fieldTitleLabel: `Titolo / riassunto (facoltativo)`,
+      fieldContentLabel: `Contenuto`,
+      fieldContentPlaceholder: `Incolla qui il testo del post che hai già visto...`,
+      fieldDateLabel: `Data del post (facoltativo)`,
+      fieldEmbedLabel: `Link del post o codice embed`,
+      fieldEmbedPlaceholder: `Incolla il link del post pubblico OPPURE il codice di "Embed this post"`,
+      embedHint: `Sul post pubblico → pulsante «…» → «Embed this post» → copia tutto il codice e incollalo qui. Oppure incolla solo il link del post: verrà convertito automaticamente.`,
+      fieldNoteLabel: `Nota (facoltativo)`,
+      fieldTagsLabel: `Tag (separati da virgola)`,
+      fieldTagsPlaceholder: `carriera, IT, risorse`,
+      cancelBtn: `Annulla`,
+      saveBtn: `Salva`,
+      confirmDeleteTitle: `Eliminare definitivamente?`,
+      confirmDeleteText: `Questa voce verrà rimossa dall'elenco. L'azione non può essere annullata.`,
+      confirmDeleteBtn: `Elimina`,
+      errorContentRequired: `Aggiungi il contenuto del post.`,
+      errorInvalidEmbed: `Nessun link LinkedIn valido trovato. Incolla il link del post pubblico o il codice completo di "Embed this post".`,
+      toastUpdated: `Aggiornato.`,
+      toastSavedArchive: `Salvato nell'archivio.`,
+      toastSavedGallery: `Salvato nella galleria.`,
+      toastDeleted: `Eliminato.`,
+      toastBackupDownloaded: `Backup scaricato.`,
+      toastImportSuccess: `Importazione riuscita: +{a} archivio, +{g} galleria.`,
+      toastImportFail: `Il file non contiene dati di backup validi.`,
+      toastStorageFail: `Impossibile salvare localmente (spazio di archiviazione non disponibile).`,
+      emptyArchiveTitle: `L'archivio è vuoto`,
+      emptyArchiveText: `Incolla il testo di un post che hai già visto e archivialo qui, con tag e data.`,
+      emptyGalleryTitle: `La galleria è vuota`,
+      emptyGalleryText: `Aggiungi il tuo primo post pubblico usando l'opzione ufficiale "Embed this post" di LinkedIn.`,
+      emptySearchTitle: `Nessuna corrispondenza`,
+      emptySearchText: `Prova un altro termine di ricerca o rimuovi il filtro per tag.`,
+      stampArchived: `Archiviato`,
+      stampSaved: `Salvato`,
+      authorUnknown: `Autore sconosciuto`,
+      expand: `Espandi`,
+      collapse: `Comprimi`,
+      openOriginal: `Apri originale`,
+      editAction: `Modifica`,
+      deleteAction: `Elimina`,
+      embedIframeTitle: `Post LinkedIn incorporato`
+    },
+    es: {
+      locale: `es-ES`,
+      plate: `Archivo personal · sin cuenta`,
+      title: `Archivo y Galería de LinkedIn`,
+      subtitle: `publicaciones guardadas manualmente + publicaciones públicas mediante embed oficial`,
+      tabArchive: `Archivo`,
+      tabGallery: `Galería`,
+      themeToggleLabel: `Cambiar tema claro/oscuro`,
+      searchPlaceholder: `Buscar...`,
+      searchAriaLabel: `Buscar en la lista`,
+      sortAriaLabel: `Ordenar por fecha`,
+      sortNewest: `Más recientes`,
+      sortOldest: `Más antiguos`,
+      exportBtn: `Descargar copia de seguridad`,
+      importBtn: `Cargar copia de seguridad`,
+      tagAll: `Todos`,
+      fabAddLabel: `Añadir una nueva entrada`,
+      footerText: `Tus datos (archivo, enlaces, notas) permanecen en este navegador (localStorage); la aplicación no tiene servidor ni estadísticas. Atención: cada publicación de la Galería se carga desde LinkedIn (iframe oficial), por lo que LinkedIn recibe tu dirección IP y la dirección de la publicación mostrada, y puede establecer sus propias cookies en ese marco.`,
+      dialogTitleAddArchive: `Añadir al archivo`,
+      dialogTitleAddGallery: `Añadir a la galería`,
+      dialogTitleEdit: `Editar`,
+      fieldUrlLabel: `Enlace de la publicación / perfil`,
+      fieldAuthorLabel: `Autor`,
+      fieldAuthorPlaceholder: `Nombre del autor`,
+      fieldTitleLabel: `Título / resumen (opcional)`,
+      fieldContentLabel: `Contenido`,
+      fieldContentPlaceholder: `Pega aquí el texto de la publicación que ya viste...`,
+      fieldDateLabel: `Fecha de la publicación (opcional)`,
+      fieldEmbedLabel: `Enlace de la publicación o código de inserción`,
+      fieldEmbedPlaceholder: `Pega el enlace de la publicación pública O el código de "Embed this post"`,
+      embedHint: `En la publicación pública → el botón «…» → «Embed this post» → copia todo el código y pégalo aquí. O simplemente pega el enlace de la publicación, se convierte automáticamente.`,
+      fieldNoteLabel: `Nota (opcional)`,
+      fieldTagsLabel: `Etiquetas (separadas por comas)`,
+      fieldTagsPlaceholder: `carrera, TI, recursos`,
+      cancelBtn: `Cancelar`,
+      saveBtn: `Guardar`,
+      confirmDeleteTitle: `¿Eliminar definitivamente?`,
+      confirmDeleteText: `Esta entrada se eliminará de la lista. Esta acción no se puede deshacer.`,
+      confirmDeleteBtn: `Eliminar`,
+      errorContentRequired: `Añade el contenido de la publicación.`,
+      errorInvalidEmbed: `No se encontró un enlace de LinkedIn válido. Pega el enlace de la publicación pública o el código completo de "Embed this post".`,
+      toastUpdated: `Actualizado.`,
+      toastSavedArchive: `Guardado en el archivo.`,
+      toastSavedGallery: `Guardado en la galería.`,
+      toastDeleted: `Eliminado.`,
+      toastBackupDownloaded: `Copia de seguridad descargada.`,
+      toastImportSuccess: `Importación correcta: +{a} archivo, +{g} galería.`,
+      toastImportFail: `El archivo no contiene datos de copia de seguridad válidos.`,
+      toastStorageFail: `No se pudo guardar localmente (almacenamiento no disponible).`,
+      emptyArchiveTitle: `El archivo está vacío`,
+      emptyArchiveText: `Pega el texto de una publicación que ya viste y archívala aquí, con etiquetas y fecha.`,
+      emptyGalleryTitle: `La galería está vacía`,
+      emptyGalleryText: `Añade tu primera publicación pública usando la opción oficial "Embed this post" de LinkedIn.`,
+      emptySearchTitle: `Sin resultados`,
+      emptySearchText: `Prueba con otro término de búsqueda o quita el filtro de etiqueta.`,
+      stampArchived: `Archivado`,
+      stampSaved: `Guardado`,
+      authorUnknown: `Autor desconocido`,
+      expand: `Expandir`,
+      collapse: `Contraer`,
+      openOriginal: `Abrir original`,
+      editAction: `Editar`,
+      deleteAction: `Eliminar`,
+      embedIframeTitle: `Publicación de LinkedIn incrustada`
+    },
+    pt: {
+      locale: `pt-PT`,
+      plate: `Arquivo pessoal · sem conta`,
+      title: `Arquivo e Galeria do LinkedIn`,
+      subtitle: `publicações guardadas manualmente + publicações públicas via embed oficial`,
+      tabArchive: `Arquivo`,
+      tabGallery: `Galeria`,
+      themeToggleLabel: `Alternar tema claro/escuro`,
+      searchPlaceholder: `Pesquisar...`,
+      searchAriaLabel: `Pesquisar na lista`,
+      sortAriaLabel: `Ordenar por data`,
+      sortNewest: `Mais recentes`,
+      sortOldest: `Mais antigos`,
+      exportBtn: `Transferir cópia de segurança`,
+      importBtn: `Carregar cópia de segurança`,
+      tagAll: `Todas`,
+      fabAddLabel: `Adicionar uma nova entrada`,
+      footerText: `Os teus dados (arquivo, links, notas) permanecem neste navegador (localStorage); a aplicação não tem servidor nem estatísticas. Atenção: cada publicação da Galeria é carregada a partir do LinkedIn (iframe oficial), pelo que o LinkedIn recebe o teu endereço IP e o endereço da publicação apresentada e pode definir os seus próprios cookies nesse quadro.`,
+      dialogTitleAddArchive: `Adicionar ao arquivo`,
+      dialogTitleAddGallery: `Adicionar à galeria`,
+      dialogTitleEdit: `Editar`,
+      fieldUrlLabel: `Link da publicação / perfil`,
+      fieldAuthorLabel: `Autor`,
+      fieldAuthorPlaceholder: `Nome do autor`,
+      fieldTitleLabel: `Título / resumo (opcional)`,
+      fieldContentLabel: `Conteúdo`,
+      fieldContentPlaceholder: `Cole aqui o texto da publicação que já viu...`,
+      fieldDateLabel: `Data da publicação (opcional)`,
+      fieldEmbedLabel: `Link da publicação ou código de incorporação`,
+      fieldEmbedPlaceholder: `Cole o link da publicação pública OU o código de "Embed this post"`,
+      embedHint: `Na publicação pública → botão «…» → «Embed this post» → copie todo o código e cole-o aqui. Ou cole apenas o link da publicação, é convertido automaticamente.`,
+      fieldNoteLabel: `Nota (opcional)`,
+      fieldTagsLabel: `Etiquetas (separadas por vírgula)`,
+      fieldTagsPlaceholder: `carreira, TI, recursos`,
+      cancelBtn: `Cancelar`,
+      saveBtn: `Guardar`,
+      confirmDeleteTitle: `Eliminar definitivamente?`,
+      confirmDeleteText: `Esta entrada será removida da lista. Esta ação não pode ser anulada.`,
+      confirmDeleteBtn: `Eliminar`,
+      errorContentRequired: `Adicione o conteúdo da publicação.`,
+      errorInvalidEmbed: `Não foi encontrado um link do LinkedIn válido. Cole o link da publicação pública ou o código completo de "Embed this post".`,
+      toastUpdated: `Atualizado.`,
+      toastSavedArchive: `Guardado no arquivo.`,
+      toastSavedGallery: `Guardado na galeria.`,
+      toastDeleted: `Eliminado.`,
+      toastBackupDownloaded: `Cópia de segurança transferida.`,
+      toastImportSuccess: `Importação concluída: +{a} arquivo, +{g} galeria.`,
+      toastImportFail: `O ficheiro não contém dados de cópia de segurança válidos.`,
+      toastStorageFail: `Não foi possível guardar localmente (armazenamento indisponível).`,
+      emptyArchiveTitle: `O arquivo está vazio`,
+      emptyArchiveText: `Cole o texto de uma publicação que já viu e arquive-a aqui, com etiquetas e data.`,
+      emptyGalleryTitle: `A galeria está vazia`,
+      emptyGalleryText: `Adicione a sua primeira publicação pública usando a opção oficial "Embed this post" do LinkedIn.`,
+      emptySearchTitle: `Sem correspondências`,
+      emptySearchText: `Experimente outro termo de pesquisa ou remova o filtro de etiqueta.`,
+      stampArchived: `Arquivado`,
+      stampSaved: `Guardado`,
+      authorUnknown: `Autor desconhecido`,
+      expand: `Expandir`,
+      collapse: `Recolher`,
+      openOriginal: `Abrir original`,
+      editAction: `Editar`,
+      deleteAction: `Eliminar`,
+      embedIframeTitle: `Publicação do LinkedIn incorporada`
+    },
+    de: {
+      locale: `de-DE`,
+      plate: `Persönliche Ablage · ohne Konto`,
+      title: `LinkedIn-Archiv & Galerie`,
+      subtitle: `manuell gespeicherte Beiträge + öffentliche Beiträge per offiziellem Embed`,
+      tabArchive: `Archiv`,
+      tabGallery: `Galerie`,
+      themeToggleLabel: `Hell-/Dunkelmodus umschalten`,
+      searchPlaceholder: `Suchen...`,
+      searchAriaLabel: `In der Liste suchen`,
+      sortAriaLabel: `Nach Datum sortieren`,
+      sortNewest: `Neueste zuerst`,
+      sortOldest: `Älteste zuerst`,
+      exportBtn: `Backup herunterladen`,
+      importBtn: `Backup laden`,
+      tagAll: `Alle`,
+      fabAddLabel: `Neuen Eintrag hinzufügen`,
+      footerText: `Deine Daten (Ablage, Links, Notizen) bleiben in diesem Browser (localStorage); die App hat keinen Server und keine Statistik. Achtung: Jeder Beitrag in der Galerie wird von LinkedIn geladen (offizieller Embed-iframe); LinkedIn erhält dadurch deine IP-Adresse und die Adresse des angezeigten Beitrags und kann in diesem Frame eigene Cookies setzen.`,
+      dialogTitleAddArchive: `Zum Archiv hinzufügen`,
+      dialogTitleAddGallery: `Zur Galerie hinzufügen`,
+      dialogTitleEdit: `Bearbeiten`,
+      fieldUrlLabel: `Link zum Beitrag / Profil`,
+      fieldAuthorLabel: `Autor`,
+      fieldAuthorPlaceholder: `Name des Autors`,
+      fieldTitleLabel: `Titel / Zusammenfassung (optional)`,
+      fieldContentLabel: `Inhalt`,
+      fieldContentPlaceholder: `Füge hier den Text des Beitrags ein, den du bereits gesehen hast...`,
+      fieldDateLabel: `Veröffentlichungsdatum (optional)`,
+      fieldEmbedLabel: `Beitragslink oder Einbettungscode`,
+      fieldEmbedPlaceholder: `Füge den Link zum öffentlichen Beitrag ODER den Code von „Embed this post" ein`,
+      embedHint: `Beim öffentlichen Beitrag → Schaltfläche „…" → „Embed this post" → gesamten Code kopieren und hier einfügen. Oder einfach nur den Beitragslink einfügen — er wird automatisch umgewandelt.`,
+      fieldNoteLabel: `Notiz (optional)`,
+      fieldTagsLabel: `Schlagwörter (durch Komma getrennt)`,
+      fieldTagsPlaceholder: `Karriere, IT, Ressourcen`,
+      cancelBtn: `Abbrechen`,
+      saveBtn: `Speichern`,
+      confirmDeleteTitle: `Endgültig löschen?`,
+      confirmDeleteText: `Dieser Eintrag wird aus der Liste entfernt. Diese Aktion kann nicht rückgängig gemacht werden.`,
+      confirmDeleteBtn: `Löschen`,
+      errorContentRequired: `Füge den Inhalt des Beitrags hinzu.`,
+      errorInvalidEmbed: `Kein gültiger LinkedIn-Link gefunden. Füge den Link zum öffentlichen Beitrag oder den vollständigen Code von „Embed this post" ein.`,
+      toastUpdated: `Aktualisiert.`,
+      toastSavedArchive: `Im Archiv gespeichert.`,
+      toastSavedGallery: `In der Galerie gespeichert.`,
+      toastDeleted: `Gelöscht.`,
+      toastBackupDownloaded: `Backup heruntergeladen.`,
+      toastImportSuccess: `Import erfolgreich: +{a} Archiv, +{g} Galerie.`,
+      toastImportFail: `Die Datei enthält keine gültigen Backup-Daten.`,
+      toastStorageFail: `Lokales Speichern nicht möglich (Speicher nicht verfügbar).`,
+      emptyArchiveTitle: `Das Archiv ist leer`,
+      emptyArchiveText: `Füge den Text eines Beitrags ein, den du bereits gesehen hast, und archiviere ihn hier mit Schlagwörtern und Datum.`,
+      emptyGalleryTitle: `Die Galerie ist leer`,
+      emptyGalleryText: `Füge deinen ersten öffentlichen Beitrag über die offizielle Option „Embed this post" von LinkedIn hinzu.`,
+      emptySearchTitle: `Keine Treffer`,
+      emptySearchText: `Versuche einen anderen Suchbegriff oder entferne den Schlagwort-Filter.`,
+      stampArchived: `Archiviert`,
+      stampSaved: `Gespeichert`,
+      authorUnknown: `Unbekannter Autor`,
+      expand: `Erweitern`,
+      collapse: `Einklappen`,
+      openOriginal: `Original öffnen`,
+      editAction: `Bearbeiten`,
+      deleteAction: `Löschen`,
+      embedIframeTitle: `Eingebetteter LinkedIn-Beitrag`
+    }
+  };
+
+  var state = {
+    activeTab: 'archive',
+    lang: 'ro',
+    archive: [],
+    gallery: [],
+    search: '',
+    activeTag: null,
+    sort: 'newest',
+    editingId: null,
+    pendingDelete: null
+  };
+
+  // ---------- i18n ----------
+  function t(key) {
+    var dict = I18N[state.lang] || I18N.ro;
+    if (dict[key] !== undefined) return dict[key];
+    return (I18N.ro[key] !== undefined) ? I18N.ro[key] : key;
+  }
+
+  function detectInitialLang() {
+    var saved = null;
+    try { saved = localStorage.getItem(STORAGE.lang); } catch (e) {}
+    if (saved && I18N[saved]) return saved;
+    var nav = ((navigator && navigator.language) || 'ro').slice(0, 2).toLowerCase();
+    if (I18N[nav]) return nav;
+    return 'ro';
+  }
+
+  function applyTranslations() {
+    document.documentElement.setAttribute('lang', state.lang);
+    document.title = t('title') + ' — ' + t('subtitle');
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+    });
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(function (el) {
+      el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label')));
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      el.setAttribute('title', t(el.getAttribute('data-i18n-title')));
+    });
+  }
+
+  // ---------- persistence ----------
+  function loadAll() {
+    try { state.archive = sanitizeList(JSON.parse(localStorage.getItem(STORAGE.archive)), 'archive'); }
+    catch (e) { state.archive = []; }
+    try { state.gallery = sanitizeList(JSON.parse(localStorage.getItem(STORAGE.gallery)), 'gallery'); }
+    catch (e) { state.gallery = []; }
+    var theme = 'light';
+    try { theme = localStorage.getItem(STORAGE.theme) || 'light'; } catch (e) {}
+    if (theme !== 'dark') theme = 'light';
+    document.body.setAttribute('data-theme', theme);
+  }
+  function persist(type) {
+    try { localStorage.setItem(STORAGE[type], JSON.stringify(state[type])); }
+    catch (e) { showToast(t('toastStorageFail')); }
+  }
+  function generateId() {
+    try { if (crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
+  }
+
+  // ---------- embed extraction & validation ----------
+  function validateLinkedInEmbed(url) {
+    try {
+      var u = new URL(url);
+      var host = u.hostname.replace(/^www\./, '');
+      if (u.protocol === 'https:' && !u.username && !u.password && (!u.port || u.port === '443') &&
+          host === 'linkedin.com' && /^\/embed\/feed\/update\/urn:li:[a-z]+:\d+\/?$/i.test(u.pathname)) {
+        // rebuilt from parsed parts on a fixed origin — never trust the raw input string
+        return 'https://www.linkedin.com' + u.pathname + u.search;
+      }
+    } catch (e) {}
+    return null;
+  }
+  function extractEmbedSrc(input) {
+    if (!input) return null;
+    var trimmed = input.trim();
+    var iframeMatch = trimmed.match(/<iframe[^>]+src=["']([^"']+)["']/i);
+    if (iframeMatch) {
+      var v1 = validateLinkedInEmbed(iframeMatch[1]);
+      if (v1) return v1;
+    }
+    var urnMatch = trimmed.match(/urn:li:(activity|share):(\d+)/i);
+    if (urnMatch) {
+      var v2 = validateLinkedInEmbed('https://www.linkedin.com/embed/feed/update/urn:li:' + urnMatch[1].toLowerCase() + ':' + urnMatch[2]);
+      if (v2) return v2;
+    }
+    var slugMatch = trimmed.match(/-activity-(\d{10,25})-/);
+    if (slugMatch) {
+      var v3 = validateLinkedInEmbed('https://www.linkedin.com/embed/feed/update/urn:li:activity:' + slugMatch[1]);
+      if (v3) return v3;
+    }
+    return null;
+  }
+  function extractHeight(input) {
+    var m = input.match(/height=["']?(\d+)["']?/i);
+    if (!m) return 600;
+    return Math.min(Math.max(parseInt(m[1], 10), 300), 1200);
+  }
+  function extractOriginalUrl(input) {
+    var m = input.match(/https?:\/\/(www\.)?linkedin\.com\/[^\s"'<>]+/i);
+    return m ? safeHttpUrl(m[0].replace('/embed/', '/')) : '';
+  }
+  // only http(s) links may reach an href (blocks javascript:, data: ...)
+  function safeHttpUrl(u) {
+    try {
+      var x = new URL(String(u || ''));
+      return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : '';
+    } catch (e) { return ''; }
+  }
+  // normalize any entry coming from localStorage or an imported backup
+  function str(v, max) { return (typeof v === 'string') ? v.slice(0, max || 20000) : ''; }
+  function sanitizeEntry(item, type) {
+    if (!item || typeof item !== 'object' || typeof item.id !== 'string' || !item.id) return null;
+    var d = new Date(item.dateAdded);
+    var out = {
+      id: item.id.slice(0, 80),
+      url: safeHttpUrl(item.url),
+      tags: Array.isArray(item.tags) ? item.tags.filter(function (x) { return typeof x === 'string'; }).map(function (x) { return x.slice(0, 60); }).slice(0, 50) : [],
+      dateAdded: isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString()
+    };
+    if (type === 'archive') {
+      out.author = str(item.author, 300); out.title = str(item.title, 500); out.content = str(item.content);
+      out.datePosted = /^\d{4}-\d{2}-\d{2}$/.test(item.datePosted || '') ? item.datePosted : '';
+      if (!out.content) return null;
+    } else {
+      out.embedSrc = validateLinkedInEmbed(item.embedSrc);
+      if (!out.embedSrc) return null;
+      var h = parseInt(item.embedHeight, 10);
+      out.embedHeight = isNaN(h) ? 600 : Math.min(Math.max(h, 300), 1200);
+      out.note = str(item.note, 500);
+    }
+    return out;
+  }
+  function sanitizeList(arr, type) {
+    var seen = {}, res = [];
+    (Array.isArray(arr) ? arr : []).forEach(function (it) {
+      var e = sanitizeEntry(it, type);
+      if (e && !seen[e.id]) { seen[e.id] = 1; res.push(e); }
+    });
+    return res;
+  }
+  // case- and diacritics-insensitive text for search
+  function fold(x) { return String(x == null ? '' : x).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+
+  // ---------- helpers ----------
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function formatDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    var locale = (I18N[state.lang] && I18N[state.lang].locale) || 'ro-RO';
+    return d.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  var toastTimer;
+  function showToast(msg) {
+    var toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+  }
+  function allTags(list) {
+    var set = new Set();
+    list.forEach(function (item) { (item.tags || []).forEach(function (t) { set.add(t); }); });
+    return Array.from(set).sort();
+  }
+  function getFilteredSorted(list) {
+    var out = list.slice();
+    if (state.search.trim()) {
+      var q = fold(state.search.trim());
+      out = out.filter(function (item) {
+        var hay = [item.author, item.title, item.content, item.note, item.url, (item.tags || []).join(' ')]
+          .filter(Boolean).join(' ');
+        hay = fold(hay);
+        return hay.indexOf(q) !== -1;
+      });
+    }
+    if (state.activeTag) {
+      out = out.filter(function (item) { return (item.tags || []).indexOf(state.activeTag) !== -1; });
+    }
+    out.sort(function (a, b) {
+      var da = new Date(a.dateAdded).getTime();
+      var db = new Date(b.dateAdded).getTime();
+      return state.sort === 'newest' ? db - da : da - db;
+    });
+    return out;
+  }
+
+  // ---------- rendering ----------
+  function render() { renderTabs(); renderTagRow(); renderGrid(); }
+
+  function renderTabs() {
+    document.querySelectorAll('.tab').forEach(function (btn) {
+      var isActive = btn.dataset.tab === state.activeTab;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  function renderTagRow() {
+    var list = state.activeTab === 'archive' ? state.archive : state.gallery;
+    var tags = allTags(list);
+    var row = document.getElementById('tagRow');
+    row.innerHTML = '';
+    if (!tags.length) return;
+    var allChip = document.createElement('button');
+    allChip.className = 'tag-chip' + (state.activeTag === null ? ' active' : '');
+    allChip.textContent = t('tagAll');
+    allChip.addEventListener('click', function () { state.activeTag = null; render(); });
+    row.appendChild(allChip);
+    tags.forEach(function (tag) {
+      var chip = document.createElement('button');
+      chip.className = 'tag-chip' + (state.activeTag === tag ? ' active' : '');
+      chip.textContent = tag;
+      chip.addEventListener('click', function () { state.activeTag = (state.activeTag === tag ? null : tag); render(); });
+      row.appendChild(chip);
+    });
+  }
+
+  function renderGrid() {
+    var grid = document.getElementById('cardGrid');
+    var emptyState = document.getElementById('emptyState');
+    var list = state.activeTab === 'archive' ? state.archive : state.gallery;
+    var filtered = getFilteredSorted(list);
+    grid.innerHTML = '';
+
+    if (!list.length) {
+      emptyState.hidden = false; grid.hidden = true;
+      emptyState.innerHTML = state.activeTab === 'archive'
+        ? '<h2>' + escapeHtml(t('emptyArchiveTitle')) + '</h2><p>' + escapeHtml(t('emptyArchiveText')) + '</p>'
+        : '<h2>' + escapeHtml(t('emptyGalleryTitle')) + '</h2><p>' + escapeHtml(t('emptyGalleryText')) + '</p>';
+      return;
+    }
+    if (!filtered.length) {
+      emptyState.hidden = false; grid.hidden = true;
+      emptyState.innerHTML = '<h2>' + escapeHtml(t('emptySearchTitle')) + '</h2><p>' + escapeHtml(t('emptySearchText')) + '</p>';
+      return;
+    }
+    emptyState.hidden = true; grid.hidden = false;
+
+    filtered.forEach(function (item) {
+      var card = document.createElement('article');
+      card.className = 'card';
+      var stampLabel = state.activeTab === 'archive' ? t('stampArchived') : t('stampSaved');
+      var tagsHtml = (item.tags || []).map(function (tag) { return '<span class="card-tag">' + escapeHtml(tag) + '</span>'; }).join('');
+      var originalLink = safeHttpUrl(item.url) ? '<a href="' + escapeHtml(safeHttpUrl(item.url)) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(t('openOriginal')) + '</a>' : '';
+
+      if (state.activeTab === 'archive') {
+        card.innerHTML =
+          '<span class="stamp">' + escapeHtml(stampLabel) + ' · ' + formatDate(item.dateAdded) + '</span>' +
+          '<p class="card-author">' + escapeHtml(item.author || t('authorUnknown')) + '</p>' +
+          (item.title ? '<p class="card-title">' + escapeHtml(item.title) + '</p>' : '') +
+          '<div class="card-content">' + escapeHtml(item.content).replace(/\n/g, '<br>') + '</div>' +
+          '<button class="expand-btn" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('expand')) + '</button>' +
+          '<div class="card-tags">' + tagsHtml + '</div>' +
+          '<div class="card-actions">' + originalLink +
+            '<button data-action="edit" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('editAction')) + '</button>' +
+            '<button data-action="delete" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('deleteAction')) + '</button>' +
+          '</div>';
+      } else {
+        card.innerHTML =
+          '<span class="stamp">' + escapeHtml(stampLabel) + ' · ' + formatDate(item.dateAdded) + '</span>' +
+          (item.note ? '<p class="card-title">' + escapeHtml(item.note) + '</p>' : '') +
+          '<div class="embed-wrap"><iframe src="' + escapeHtml(item.embedSrc) + '" height="' + (parseInt(item.embedHeight, 10) || 600) + '" frameborder="0" allowfullscreen loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms" title="' + escapeHtml(t('embedIframeTitle')) + '" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+          '<div class="card-tags">' + tagsHtml + '</div>' +
+          '<div class="card-actions">' + originalLink +
+            '<button data-action="edit" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('editAction')) + '</button>' +
+            '<button data-action="delete" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('deleteAction')) + '</button>' +
+          '</div>';
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  // ---------- card interactions ----------
+  document.getElementById('cardGrid').addEventListener('click', function (e) {
+    var expandBtn = e.target.closest('.expand-btn');
+    if (expandBtn) {
+      var content = expandBtn.previousElementSibling;
+      content.classList.toggle('expanded');
+      expandBtn.textContent = content.classList.contains('expanded') ? t('collapse') : t('expand');
+      return;
+    }
+    var actionBtn = e.target.closest('[data-action]');
+    if (!actionBtn) return;
+    var id = actionBtn.dataset.id;
+    if (actionBtn.dataset.action === 'edit') openEditDialog(id);
+    if (actionBtn.dataset.action === 'delete') openConfirmDelete(id);
+  });
+
+  // ---------- tabs ----------
+  document.querySelectorAll('.tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      state.activeTab = btn.dataset.tab;
+      state.activeTag = null;
+      state.search = '';
+      document.getElementById('searchInput').value = '';
+      render();
+    });
+  });
+
+  // ---------- search / sort ----------
+  document.getElementById('searchInput').addEventListener('input', function (e) { state.search = e.target.value; render(); });
+  document.getElementById('sortSelect').addEventListener('change', function (e) { state.sort = e.target.value; render(); });
+
+  // ---------- language ----------
+  document.getElementById('langSelect').addEventListener('change', function (e) {
+    state.lang = e.target.value;
+    try { localStorage.setItem(STORAGE.lang, state.lang); } catch (err) {}
+    applyTranslations();
+    render();
+  });
+
+  // ---------- theme ----------
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var current = document.body.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    try { localStorage.setItem(STORAGE.theme, next); } catch (e) {}
+  });
+
+  // ---------- add / edit dialog ----------
+  var entryDialog = document.getElementById('entryDialog');
+  var entryForm = document.getElementById('entryForm');
+  var formError = document.getElementById('formError');
+
+  function resetForm() { entryForm.reset(); formError.hidden = true; state.editingId = null; }
+
+  function openAddDialog() {
+    resetForm();
+    document.getElementById('dialogTitle').textContent = state.activeTab === 'archive' ? t('dialogTitleAddArchive') : t('dialogTitleAddGallery');
+    document.getElementById('archiveFields').hidden = state.activeTab !== 'archive';
+    document.getElementById('galleryFields').hidden = state.activeTab !== 'gallery';
+    entryDialog.showModal();
+  }
+
+  function openEditDialog(id) {
+    var list = state.activeTab === 'archive' ? state.archive : state.gallery;
+    var item = list.find(function (x) { return x.id === id; });
+    if (!item) return;
+    resetForm();
+    state.editingId = id;
+    document.getElementById('dialogTitle').textContent = t('dialogTitleEdit');
+    document.getElementById('archiveFields').hidden = state.activeTab !== 'archive';
+    document.getElementById('galleryFields').hidden = state.activeTab !== 'gallery';
+    if (state.activeTab === 'archive') {
+      document.getElementById('f-url').value = item.url || '';
+      document.getElementById('f-author').value = item.author || '';
+      document.getElementById('f-title').value = item.title || '';
+      document.getElementById('f-content').value = item.content || '';
+      document.getElementById('f-date').value = item.datePosted || '';
+    } else {
+      document.getElementById('f-embed').value = item.embedSrc || '';
+      document.getElementById('f-note').value = item.note || '';
+    }
+    document.getElementById('f-tags').value = (item.tags || []).join(', ');
+    entryDialog.showModal();
+  }
+
+  document.getElementById('fabAdd').addEventListener('click', openAddDialog);
+  document.getElementById('cancelBtn').addEventListener('click', function () { entryDialog.close(); });
+
+  entryForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError.hidden = true;
+    var tags = document.getElementById('f-tags').value.split(',').map(function (tg) { return tg.trim(); }).filter(Boolean);
+
+    if (state.activeTab === 'archive') {
+      var content = document.getElementById('f-content').value.trim();
+      if (!content) { formError.textContent = t('errorContentRequired'); formError.hidden = false; return; }
+      var existingA = state.editingId ? state.archive.find(function (x) { return x.id === state.editingId; }) : null;
+      var entryA = {
+        id: state.editingId || generateId(),
+        url: safeHttpUrl(document.getElementById('f-url').value.trim()),
+        author: document.getElementById('f-author').value.trim(),
+        title: document.getElementById('f-title').value.trim(),
+        content: content,
+        tags: tags,
+        datePosted: document.getElementById('f-date').value || '',
+        dateAdded: existingA ? existingA.dateAdded : new Date().toISOString()
+      };
+      if (state.editingId) {
+        var idxA = state.archive.findIndex(function (x) { return x.id === state.editingId; });
+        state.archive[idxA] = entryA;
+      } else { state.archive.unshift(entryA); }
+      persist('archive');
+      showToast(state.editingId ? t('toastUpdated') : t('toastSavedArchive'));
+    } else {
+      var raw = document.getElementById('f-embed').value.trim();
+      var embedSrc = extractEmbedSrc(raw);
+      if (!embedSrc) {
+        formError.textContent = t('errorInvalidEmbed');
+        formError.hidden = false;
+        return;
+      }
+      var existingG = state.editingId ? state.gallery.find(function (x) { return x.id === state.editingId; }) : null;
+      var entryG = {
+        id: state.editingId || generateId(),
+        embedSrc: embedSrc,
+        embedHeight: extractHeight(raw),
+        url: extractOriginalUrl(raw),
+        note: document.getElementById('f-note').value.trim(),
+        tags: tags,
+        dateAdded: existingG ? existingG.dateAdded : new Date().toISOString()
+      };
+      if (state.editingId) {
+        var idxG = state.gallery.findIndex(function (x) { return x.id === state.editingId; });
+        state.gallery[idxG] = entryG;
+      } else { state.gallery.unshift(entryG); }
+      persist('gallery');
+      showToast(state.editingId ? t('toastUpdated') : t('toastSavedGallery'));
+    }
+    entryDialog.close();
+    render();
+  });
+
+  // ---------- delete confirm ----------
+  var confirmDialog = document.getElementById('confirmDialog');
+  function openConfirmDelete(id) { state.pendingDelete = id; confirmDialog.showModal(); }
+  document.getElementById('confirmCancel').addEventListener('click', function () { confirmDialog.close(); });
+  document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+    var type = state.activeTab;
+    state[type] = state[type].filter(function (x) { return x.id !== state.pendingDelete; });
+    persist(type);
+    confirmDialog.close();
+    render();
+    showToast(t('toastDeleted'));
+  });
+
+  // click-outside-to-close for both dialogs
+  [entryDialog, confirmDialog].forEach(function (dlg) {
+    dlg.addEventListener('click', function (e) {
+      var inner = dlg.querySelector('.dialog-inner');
+      var rect = inner.getBoundingClientRect();
+      var outside = e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom;
+      if (outside) dlg.close();
+    });
+  });
+
+  // ---------- export / import ----------
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    var data = { archive: state.archive, gallery: state.gallery, exportedAt: new Date().toISOString() };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'arhiva-linkedin-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+    showToast(t('toastBackupDownloaded'));
+  });
+
+  document.getElementById('importBtn').addEventListener('click', function () { document.getElementById('importFile').click(); });
+  document.getElementById('importFile').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        var incomingArchive = sanitizeList(data && data.archive, 'archive');
+        var incomingGallery = sanitizeList(data && data.gallery, 'gallery');
+        var existingArchiveIds = new Set(state.archive.map(function (x) { return x.id; }));
+        var existingGalleryIds = new Set(state.gallery.map(function (x) { return x.id; }));
+        var addedA = 0, addedG = 0;
+        incomingArchive.forEach(function (item) { if (!existingArchiveIds.has(item.id)) { state.archive.push(item); addedA++; } });
+        incomingGallery.forEach(function (item) { if (!existingGalleryIds.has(item.id)) { state.gallery.push(item); addedG++; } });
+        persist('archive'); persist('gallery');
+        render();
+        showToast(t('toastImportSuccess').replace('{a}', addedA).replace('{g}', addedG));
+      } catch (err) {
+        showToast(t('toastImportFail'));
+      }
+    };
+    if (file.size > 20 * 1024 * 1024) { showToast(t('toastImportFail')); e.target.value = ''; return; }
+    reader.onerror = function () { showToast(t('toastImportFail')); };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // ---------- init ----------
+  state.lang = detectInitialLang();
+  document.getElementById('langSelect').value = state.lang;
+  applyTranslations();
+  loadAll();
+  render();
+})();
+</script>
+</body>
+</html>
