@@ -24,6 +24,7 @@ Verificate în cod:
 - Avertisment la salvarea unui link deja existent (se poate salva oricum la a doua apăsare).
 - Scurtături de tastatură: `/` pentru căutare, `n` pentru o intrare nouă (când focusul nu este într-un câmp de text).
 - Stil de tipărire: se tipăresc doar cardurile Arhivei, fără bară de instrumente.
+- Import CSV în Arhivă (butonul „Încarcă backup / CSV”): coloana de text este obligatorie (`content`, `text`, `commentary` sau `ShareCommentary`); opțional `url`/`link`/`ShareLink`, `author`, `title`, `date`, `tags`; separator `,` sau `;`, câmpuri între ghilimele; duplicatele (același link și text) și rândurile fără text sunt omise, iar linkurile non-http(s) sunt ignorate. Util pentru a prelua în bloc note dintr-un tabel propriu sau dintr-un export CSV.
 - Backup JSON (descărcare/încărcare); la import intrările sunt validate și cele cu `id` deja existent sunt ignorate.
 - Temă deschisă/întunecată, 7 limbi (RO, EN, FR, IT, ES, PT, DE).
 
@@ -53,6 +54,9 @@ Verificate în cod:
 Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează complet offline; Galeria are nevoie de internet.
 
 ## Istoric / Changelog
+
+### 11 octombrie 2026 (a treia intrare)
+- Import CSV în Arhivă, cu detectarea separatorului și a coloanelor după antet, omiterea duplicatelor și mesaje în cele 7 limbi; mesajul de eroare de import menționează acum și formatul CSV.
 
 ### 11 octombrie 2026 (a doua intrare)
 - Politica CSP: `script-src` cu hash în loc de `'unsafe-inline'` (aplicația nu avea atribute `on*` inline).

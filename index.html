@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DzOzLiadDaBG+kV6SAGPXmhwMa2jPXG+iRZjb4KV/VU='; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-6pdNYw7PHJnp8yLs3GzGvlGJcsR+dW1LP0YZZo8qhX0='; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="Arhivă personală de postări LinkedIn salvate manual și galerie de postări publice prin embed oficial LinkedIn. Datele rămân în browser; galeria încarcă conținut de la LinkedIn.">
 <title>Arhivă &amp; Galerie LinkedIn — clipe salvate fără cont</title>
@@ -199,9 +199,9 @@
       <option value="author" data-i18n="sortAuthor">Autor A–Z</option>
     </select>
     <button class="btn secondary" id="exportBtn" data-i18n="exportBtn">Descarcă backup</button>
-    <button class="btn secondary" id="importBtn" data-i18n="importBtn">Încarcă backup</button>
+    <button class="btn secondary" id="importBtn" data-i18n="importBtn" title="JSON / CSV">Încarcă backup / CSV</button>
     <button class="btn secondary" id="mdBtn" data-i18n="mdBtn">Exportă Markdown</button>
-    <input type="file" id="importFile" accept="application/json" hidden>
+    <input type="file" id="importFile" accept="application/json,.json,text/csv,.csv" hidden>
   </div>
   <div class="tag-row" id="tagRow"></div>
   <p class="count-line"><span id="countLine" role="status" aria-live="polite"></span><span class="kbd-hint" data-i18n="kbdHint">Scurtături: / caută · n adaugă o intrare</span></p>
@@ -289,7 +289,7 @@
       sortNewest: `Cele mai noi`,
       sortOldest: `Cele mai vechi`,
       exportBtn: `Descarcă backup`,
-      importBtn: `Încarcă backup`,
+      importBtn: `Încarcă backup / CSV`,
       tagAll: `Toate`,
       fabAddLabel: `Adaugă o clipire nouă`,
       footerText: `Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.`,
@@ -322,7 +322,8 @@
       toastDeleted: `Șters.`,
       toastBackupDownloaded: `Backup descărcat.`,
       toastImportSuccess: `Import reușit: +{a} arhivă, +{g} galerie.`,
-      toastImportFail: `Fișierul nu conține date valide de backup.`,
+      toastImportFail: `Fișierul nu conține date valide (backup JSON sau CSV cu o coloană de text, ex. „content”).`,
+      toastCsvSuccess: `Import CSV: +{a} intrări în arhivă, {s} omise (duplicate sau fără text).`,
       toastStorageFail: `Nu am putut salva local (stocare indisponibilă).`,
       emptyArchiveTitle: `Dosarul e gol`,
       emptyArchiveText: `Lipește textul unei postări pe care ai văzut-o deja și arhiveaz-o aici, cu tag-uri și dată.`,
@@ -364,7 +365,7 @@
       sortNewest: `Newest first`,
       sortOldest: `Oldest first`,
       exportBtn: `Download backup`,
-      importBtn: `Load backup`,
+      importBtn: `Load backup / CSV`,
       tagAll: `All`,
       fabAddLabel: `Add a new entry`,
       footerText: `Your data (archive, links, notes) stays in this browser (localStorage); the app has no server and no analytics. Note: each post in the Gallery is loaded from LinkedIn (official embed iframe), so LinkedIn receives your IP address and the address of the displayed post, and may set its own cookies inside that frame.`,
@@ -397,7 +398,8 @@
       toastDeleted: `Deleted.`,
       toastBackupDownloaded: `Backup downloaded.`,
       toastImportSuccess: `Import successful: +{a} archive, +{g} gallery.`,
-      toastImportFail: `The file does not contain valid backup data.`,
+      toastImportFail: `The file does not contain valid data (JSON backup, or CSV with a text column, e.g. “content”).`,
+      toastCsvSuccess: `CSV import: +{a} archive entries, {s} skipped (duplicates or no text).`,
       toastStorageFail: `Could not save locally (storage unavailable).`,
       emptyArchiveTitle: `The archive is empty`,
       emptyArchiveText: `Paste the text of a post you already viewed and archive it here, with tags and a date.`,
@@ -439,7 +441,7 @@
       sortNewest: `Plus récent`,
       sortOldest: `Plus ancien`,
       exportBtn: `Télécharger la sauvegarde`,
-      importBtn: `Charger une sauvegarde`,
+      importBtn: `Charger sauvegarde / CSV`,
       tagAll: `Tous`,
       fabAddLabel: `Ajouter une nouvelle entrée`,
       footerText: `Vos données (archive, liens, notes) restent dans ce navigateur (localStorage) ; l'application n'a ni serveur ni statistiques. Attention : chaque publication de la Galerie est chargée depuis LinkedIn (iframe officiel) ; LinkedIn reçoit donc votre adresse IP et l'adresse de la publication affichée, et peut déposer ses propres cookies dans ce cadre.`,
@@ -472,7 +474,8 @@
       toastDeleted: `Supprimé.`,
       toastBackupDownloaded: `Sauvegarde téléchargée.`,
       toastImportSuccess: `Import réussi : +{a} archive, +{g} galerie.`,
-      toastImportFail: `Le fichier ne contient pas de données de sauvegarde valides.`,
+      toastImportFail: `Le fichier ne contient pas de données valides (sauvegarde JSON, ou CSV avec une colonne de texte, ex. « content »).`,
+      toastCsvSuccess: `Import CSV : +{a} entrées dans l'archive, {s} ignorées (doublons ou sans texte).`,
       toastStorageFail: `Impossible d'enregistrer localement (stockage indisponible).`,
       emptyArchiveTitle: `L'archive est vide`,
       emptyArchiveText: `Collez le texte d'une publication que vous avez déjà consultée et archivez-la ici, avec des étiquettes et une date.`,
@@ -514,7 +517,7 @@
       sortNewest: `Più recenti`,
       sortOldest: `Meno recenti`,
       exportBtn: `Scarica backup`,
-      importBtn: `Carica backup`,
+      importBtn: `Carica backup / CSV`,
       tagAll: `Tutti`,
       fabAddLabel: `Aggiungi una nuova voce`,
       footerText: `I tuoi dati (archivio, link, note) restano in questo browser (localStorage); l'app non ha server né statistiche. Attenzione: ogni post della Galleria viene caricato da LinkedIn (iframe ufficiale), quindi LinkedIn riceve il tuo indirizzo IP e l'indirizzo del post mostrato e può impostare propri cookie in quel riquadro.`,
@@ -547,7 +550,8 @@
       toastDeleted: `Eliminato.`,
       toastBackupDownloaded: `Backup scaricato.`,
       toastImportSuccess: `Importazione riuscita: +{a} archivio, +{g} galleria.`,
-      toastImportFail: `Il file non contiene dati di backup validi.`,
+      toastImportFail: `Il file non contiene dati validi (backup JSON o CSV con una colonna di testo, es. «content»).`,
+      toastCsvSuccess: `Importazione CSV: +{a} voci in archivio, {s} saltate (duplicati o senza testo).`,
       toastStorageFail: `Impossibile salvare localmente (spazio di archiviazione non disponibile).`,
       emptyArchiveTitle: `L'archivio è vuoto`,
       emptyArchiveText: `Incolla il testo di un post che hai già visto e archivialo qui, con tag e data.`,
@@ -589,7 +593,7 @@
       sortNewest: `Más recientes`,
       sortOldest: `Más antiguos`,
       exportBtn: `Descargar copia de seguridad`,
-      importBtn: `Cargar copia de seguridad`,
+      importBtn: `Cargar copia / CSV`,
       tagAll: `Todos`,
       fabAddLabel: `Añadir una nueva entrada`,
       footerText: `Tus datos (archivo, enlaces, notas) permanecen en este navegador (localStorage); la aplicación no tiene servidor ni estadísticas. Atención: cada publicación de la Galería se carga desde LinkedIn (iframe oficial), por lo que LinkedIn recibe tu dirección IP y la dirección de la publicación mostrada, y puede establecer sus propias cookies en ese marco.`,
@@ -622,7 +626,8 @@
       toastDeleted: `Eliminado.`,
       toastBackupDownloaded: `Copia de seguridad descargada.`,
       toastImportSuccess: `Importación correcta: +{a} archivo, +{g} galería.`,
-      toastImportFail: `El archivo no contiene datos de copia de seguridad válidos.`,
+      toastImportFail: `El archivo no contiene datos válidos (copia JSON o CSV con una columna de texto, p. ej. «content»).`,
+      toastCsvSuccess: `Importación CSV: +{a} entradas en el archivo, {s} omitidas (duplicados o sin texto).`,
       toastStorageFail: `No se pudo guardar localmente (almacenamiento no disponible).`,
       emptyArchiveTitle: `El archivo está vacío`,
       emptyArchiveText: `Pega el texto de una publicación que ya viste y archívala aquí, con etiquetas y fecha.`,
@@ -664,7 +669,7 @@
       sortNewest: `Mais recentes`,
       sortOldest: `Mais antigos`,
       exportBtn: `Transferir cópia de segurança`,
-      importBtn: `Carregar cópia de segurança`,
+      importBtn: `Carregar cópia / CSV`,
       tagAll: `Todas`,
       fabAddLabel: `Adicionar uma nova entrada`,
       footerText: `Os teus dados (arquivo, links, notas) permanecem neste navegador (localStorage); a aplicação não tem servidor nem estatísticas. Atenção: cada publicação da Galeria é carregada a partir do LinkedIn (iframe oficial), pelo que o LinkedIn recebe o teu endereço IP e o endereço da publicação apresentada e pode definir os seus próprios cookies nesse quadro.`,
@@ -697,7 +702,8 @@
       toastDeleted: `Eliminado.`,
       toastBackupDownloaded: `Cópia de segurança transferida.`,
       toastImportSuccess: `Importação concluída: +{a} arquivo, +{g} galeria.`,
-      toastImportFail: `O ficheiro não contém dados de cópia de segurança válidos.`,
+      toastImportFail: `O ficheiro não contém dados válidos (cópia JSON ou CSV com uma coluna de texto, ex. «content»).`,
+      toastCsvSuccess: `Importação CSV: +{a} entradas no arquivo, {s} omitidas (duplicados ou sem texto).`,
       toastStorageFail: `Não foi possível guardar localmente (armazenamento indisponível).`,
       emptyArchiveTitle: `O arquivo está vazio`,
       emptyArchiveText: `Cole o texto de uma publicação que já viu e arquive-a aqui, com etiquetas e data.`,
@@ -739,7 +745,7 @@
       sortNewest: `Neueste zuerst`,
       sortOldest: `Älteste zuerst`,
       exportBtn: `Backup herunterladen`,
-      importBtn: `Backup laden`,
+      importBtn: `Backup / CSV laden`,
       tagAll: `Alle`,
       fabAddLabel: `Neuen Eintrag hinzufügen`,
       footerText: `Deine Daten (Ablage, Links, Notizen) bleiben in diesem Browser (localStorage); die App hat keinen Server und keine Statistik. Achtung: Jeder Beitrag in der Galerie wird von LinkedIn geladen (offizieller Embed-iframe); LinkedIn erhält dadurch deine IP-Adresse und die Adresse des angezeigten Beitrags und kann in diesem Frame eigene Cookies setzen.`,
@@ -772,7 +778,8 @@
       toastDeleted: `Gelöscht.`,
       toastBackupDownloaded: `Backup heruntergeladen.`,
       toastImportSuccess: `Import erfolgreich: +{a} Archiv, +{g} Galerie.`,
-      toastImportFail: `Die Datei enthält keine gültigen Backup-Daten.`,
+      toastImportFail: `Die Datei enthält keine gültigen Daten (JSON-Backup oder CSV mit Textspalte, z. B. „content“).`,
+      toastCsvSuccess: `CSV-Import: +{a} Archiv-Einträge, {s} übersprungen (Duplikate oder ohne Text).`,
       toastStorageFail: `Lokales Speichern nicht möglich (Speicher nicht verfügbar).`,
       emptyArchiveTitle: `Das Archiv ist leer`,
       emptyArchiveText: `Füge den Text eines Beitrags ein, den du bereits gesehen hast, und archiviere ihn hier mit Schlagwörtern und Datum.`,
@@ -1271,13 +1278,81 @@
     showToast(t('toastBackupDownloaded'));
   });
 
+
+  // ---------- CSV import (colaps: text, link, autor, titlu, dată, tag-uri) ----------
+  function parseCsv(txt) {
+    if (txt.charCodeAt(0) === 0xFEFF) txt = txt.slice(1);
+    var first = txt.split(/\r?\n/, 1)[0] || '';
+    var delim = (first.split(';').length > first.split(',').length) ? ';' : ',';
+    var rows = [], row = [], cur = '', q = false;
+    for (var i = 0; i < txt.length; i++) {
+      var c = txt[i];
+      if (q) {
+        if (c === '"') { if (txt[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += c;
+      } else if (c === '"') q = true;
+      else if (c === delim) { row.push(cur); cur = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && txt[i + 1] === '\n') i++;
+        row.push(cur); cur = '';
+        if (row.some(function (x) { return x !== ''; })) rows.push(row);
+        row = [];
+      } else cur += c;
+    }
+    row.push(cur);
+    if (row.some(function (x) { return x !== ''; })) rows.push(row);
+    return rows;
+  }
+  var CSV_COLS = {
+    content: ['content', 'text', 'commentary', 'sharecommentary', 'body', 'post', 'continut', 'text postare'],
+    url: ['url', 'link', 'sharelink', 'shareurl', 'sharedurl', 'postlink'],
+    author: ['author', 'autor'],
+    title: ['title', 'titlu'],
+    date: ['date', 'dateposted', 'dataposted', 'data', 'dataposta', 'posted'],
+    tags: ['tags', 'tag', 'taguri', 'tag-uri', 'labels']
+  };
+  function csvToArchive(txt) {
+    var rows = parseCsv(txt);
+    if (rows.length < 2) return null;
+    var head = rows[0].map(function (h) { return fold(h).replace(/[^a-z0-9-]/g, ''); });
+    var col = {};
+    Object.keys(CSV_COLS).forEach(function (k) {
+      for (var j = 0; j < head.length; j++) if (CSV_COLS[k].indexOf(head[j]) > -1) { col[k] = j; return; }
+    });
+    if (col.content === undefined) return null;
+    var known = {}, items = [], skipped = 0;
+    state.archive.forEach(function (x) { known[(x.url || '') + '|' + fold(x.content).slice(0, 200)] = 1; });
+    rows.slice(1).forEach(function (r) {
+      var get = function (k) { return col[k] === undefined ? '' : String(r[col[k]] || '').trim(); };
+      var dt = get('date').match(/^(\d{4}-\d{2}-\d{2})/);
+      var e = sanitizeEntry({
+        id: generateId(), url: get('url'), author: get('author'), title: get('title'), content: get('content'),
+        datePosted: dt ? dt[1] : '', tags: get('tags').split(/[;,|]/).map(function (x) { return x.trim(); }).filter(Boolean),
+        dateAdded: new Date().toISOString()
+      }, 'archive');
+      var key = e ? (e.url || '') + '|' + fold(e.content).slice(0, 200) : '';
+      if (!e || known[key]) { skipped++; return; }
+      known[key] = 1; items.push(e);
+    });
+    return { items: items, skipped: skipped };
+  }
+
   document.getElementById('importBtn').addEventListener('click', function () { document.getElementById('importFile').click(); });
   document.getElementById('importFile').addEventListener('change', function (e) {
     var file = e.target.files[0];
     if (!file) return;
     var reader = new FileReader();
+    var isCsv = /\.csv$/i.test(file.name) || /csv/i.test(file.type);
     reader.onload = function () {
       try {
+        if (isCsv) {
+          var r = csvToArchive(String(reader.result));
+          if (!r) { showToast(t('toastImportFail')); return; }
+          r.items.forEach(function (it) { state.archive.push(it); });
+          persist('archive'); render();
+          showToast(t('toastCsvSuccess').replace('{a}', r.items.length).replace('{s}', r.skipped));
+          return;
+        }
         var data = JSON.parse(reader.result);
         var incomingArchive = sanitizeList(data && data.archive, 'archive');
         var incomingGallery = sanitizeList(data && data.gallery, 'gallery');
