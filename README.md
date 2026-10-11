@@ -4,6 +4,8 @@ Un singur fișier HTML în care îți păstrezi local note despre postări Linke
 
 **Live:** https://chiuta.github.io/Arhiva-LinkedIn/
 
+**Ultima actualizare:** 11 octombrie 2026
+
 ![Captura de ecran](screenshot.png)
 
 *(Captura conține intrări de exemplu introduse pentru demonstrație.)*
@@ -44,6 +46,12 @@ Verificate în cod:
 ## Rulare locală / offline
 
 Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează complet offline; Galeria are nevoie de internet.
+
+## Istoric / Changelog
+
+### 11 octombrie 2026
+- Accesibilitate: conținutul principal este încadrat în <main> (axe: 0 violări).
+- Salvarea unei intrări goale afișează acum mesajul de eroare ca alertă anunțată de cititoarele de ecran și mută focusul în câmpul „Conținut”.
 
 ## Licență
 

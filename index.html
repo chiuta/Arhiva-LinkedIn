@@ -177,6 +177,7 @@
   </div>
 </nav>
 
+<main id="main">
 <div class="tab-content-wrap">
   <div class="toolbar">
     <input type="search" class="search-input" id="searchInput" data-i18n-placeholder="searchPlaceholder" data-i18n-aria-label="searchAriaLabel" placeholder="Caută..." aria-label="Caută în listă">
@@ -194,6 +195,7 @@
 </div>
 
 <button class="fab" id="fabAdd" data-i18n-aria-label="fabAddLabel" aria-label="Adaugă o clipire nouă">+</button>
+</main>
 
 <footer class="site-footer">
   <p data-i18n="footerText">Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.</p>
@@ -219,7 +221,7 @@
         <div class="field"><label for="f-note" data-i18n="fieldNoteLabel">Notă (opțional)</label><input type="text" id="f-note"></div>
       </div>
       <div class="field"><label for="f-tags" data-i18n="fieldTagsLabel">Tag-uri (separate prin virgulă)</label><input type="text" id="f-tags" data-i18n-placeholder="fieldTagsPlaceholder" placeholder="carieră, IT, resurse"></div>
-      <p class="error-msg" id="formError" hidden></p>
+      <p class="error-msg" id="formError" role="alert" hidden></p>
       <div class="dialog-actions">
         <button type="button" class="btn secondary" id="cancelBtn" data-i18n="cancelBtn">Anulează</button>
         <button type="submit" class="btn" id="saveBtn" data-i18n="saveBtn">Salvează</button>
@@ -1086,7 +1088,7 @@
 
     if (state.activeTab === 'archive') {
       var content = document.getElementById('f-content').value.trim();
-      if (!content) { formError.textContent = t('errorContentRequired'); formError.hidden = false; return; }
+      if (!content) { formError.textContent = t('errorContentRequired'); formError.hidden = false; document.getElementById('f-content').focus(); return; }
       var existingA = state.editingId ? state.archive.find(function (x) { return x.id === state.editingId; }) : null;
       var entryA = {
         id: state.editingId || generateId(),
