@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DzOzLiadDaBG+kV6SAGPXmhwMa2jPXG+iRZjb4KV/VU='; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="Arhivă personală de postări LinkedIn salvate manual și galerie de postări publice prin embed oficial LinkedIn. Datele rămân în browser; galeria încarcă conținut de la LinkedIn.">
 <title>Arhivă &amp; Galerie LinkedIn — clipe salvate fără cont</title>
@@ -95,6 +95,18 @@
   }
   .tag-chip.active { background: var(--stamp); border-color: var(--stamp); color: var(--paper-alt); }
 
+  .count-line { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem .9rem; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; justify-content: space-between; font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); }
+  .tag-chip .n { opacity: .75; margin-left: .25em; }
+  @media print {
+    .site-header .subtitle, .tabs, .toolbar, .tag-row, .count-line, .fab, .toast, .site-footer, .card-actions, .expand-btn { display: none !important; }
+    body { background: #fff; color: #000; }
+    .tab-content-wrap { background: #fff; border: none; }
+    .card-grid { display: block; padding: 0; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #999; margin: 0 0 1rem; background: #fff; }
+    .card-content { max-height: none !important; overflow: visible; }
+    .card-content::after { display: none !important; }
+    .embed-wrap { display: none; }
+  }
   .card-grid { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.75rem; }
   @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } .site-header { padding: 1.8rem 1rem 1.2rem; } }
 
@@ -184,12 +196,15 @@
     <select id="sortSelect" class="btn secondary" data-i18n-aria-label="sortAriaLabel" aria-label="Sortează după dată">
       <option value="newest" data-i18n="sortNewest">Cele mai noi</option>
       <option value="oldest" data-i18n="sortOldest">Cele mai vechi</option>
+      <option value="author" data-i18n="sortAuthor">Autor A–Z</option>
     </select>
     <button class="btn secondary" id="exportBtn" data-i18n="exportBtn">Descarcă backup</button>
     <button class="btn secondary" id="importBtn" data-i18n="importBtn">Încarcă backup</button>
+    <button class="btn secondary" id="mdBtn" data-i18n="mdBtn">Exportă Markdown</button>
     <input type="file" id="importFile" accept="application/json" hidden>
   </div>
   <div class="tag-row" id="tagRow"></div>
+  <p class="count-line"><span id="countLine" role="status" aria-live="polite"></span><span class="kbd-hint" data-i18n="kbdHint">Scurtături: / caută · n adaugă o intrare</span></p>
   <div class="card-grid" id="cardGrid"></div>
   <div class="empty-state" id="emptyState" hidden></div>
 </div>
@@ -252,6 +267,16 @@
   var I18N = {
     ro: {
       locale: `ro-RO`,
+      countLine: `{n} din {m} intrări`,
+      mdBtn: `Exportă Markdown`,
+      toastMdDownloaded: `Markdown descărcat: {n} intrări.`,
+      toastMdEmpty: `Nu există intrări de exportat.`,
+      copyAction: `Copiază`,
+      toastCopied: `Copiat în clipboard.`,
+      toastCopyFail: `Nu am putut copia.`,
+      errorDuplicate: `Există deja o intrare cu acest link. Apasă din nou „{save}” pentru a o adăuga oricum.`,
+      kbdHint: `Scurtături: / caută · n adaugă o intrare`,
+      sortAuthor: `Autor A–Z`,
       plate: `Dosar personal · fără cont`,
       title: `Arhivă & Galerie LinkedIn`,
       subtitle: `clipe salvate manual + postări publice prin embed oficial`,
@@ -317,6 +342,16 @@
     },
     en: {
       locale: `en-GB`,
+      countLine: `{n} of {m} entries`,
+      mdBtn: `Export Markdown`,
+      toastMdDownloaded: `Markdown downloaded: {n} entries.`,
+      toastMdEmpty: `No entries to export.`,
+      copyAction: `Copy`,
+      toastCopied: `Copied to clipboard.`,
+      toastCopyFail: `Could not copy.`,
+      errorDuplicate: `An entry with this link already exists. Press “{save}” again to add it anyway.`,
+      kbdHint: `Shortcuts: / search · n add an entry`,
+      sortAuthor: `Author A–Z`,
       plate: `Personal file · no account needed`,
       title: `LinkedIn Archive & Gallery`,
       subtitle: `manually saved posts + public posts via official embed`,
@@ -382,6 +417,16 @@
     },
     fr: {
       locale: `fr-FR`,
+      countLine: `{n} sur {m} entrées`,
+      mdBtn: `Exporter en Markdown`,
+      toastMdDownloaded: `Markdown téléchargé : {n} entrées.`,
+      toastMdEmpty: `Aucune entrée à exporter.`,
+      copyAction: `Copier`,
+      toastCopied: `Copié dans le presse-papiers.`,
+      toastCopyFail: `Copie impossible.`,
+      errorDuplicate: `Une entrée avec ce lien existe déjà. Appuyez de nouveau sur « {save} » pour l’ajouter quand même.`,
+      kbdHint: `Raccourcis : / rechercher · n ajouter une entrée`,
+      sortAuthor: `Auteur A–Z`,
       plate: `Dossier personnel · sans compte`,
       title: `Archive & Galerie LinkedIn`,
       subtitle: `publications enregistrées manuellement + publications publiques via l'intégration officielle`,
@@ -447,6 +492,16 @@
     },
     it: {
       locale: `it-IT`,
+      countLine: `{n} di {m} voci`,
+      mdBtn: `Esporta Markdown`,
+      toastMdDownloaded: `Markdown scaricato: {n} voci.`,
+      toastMdEmpty: `Nessuna voce da esportare.`,
+      copyAction: `Copia`,
+      toastCopied: `Copiato negli appunti.`,
+      toastCopyFail: `Impossibile copiare.`,
+      errorDuplicate: `Esiste già una voce con questo link. Premi di nuovo «{save}» per aggiungerla comunque.`,
+      kbdHint: `Scorciatoie: / cerca · n aggiungi una voce`,
+      sortAuthor: `Autore A–Z`,
       plate: `Archivio personale · senza account`,
       title: `Archivio e Galleria LinkedIn`,
       subtitle: `post salvati manualmente + post pubblici tramite embed ufficiale`,
@@ -512,6 +567,16 @@
     },
     es: {
       locale: `es-ES`,
+      countLine: `{n} de {m} entradas`,
+      mdBtn: `Exportar Markdown`,
+      toastMdDownloaded: `Markdown descargado: {n} entradas.`,
+      toastMdEmpty: `No hay entradas para exportar.`,
+      copyAction: `Copiar`,
+      toastCopied: `Copiado al portapapeles.`,
+      toastCopyFail: `No se pudo copiar.`,
+      errorDuplicate: `Ya existe una entrada con este enlace. Pulsa de nuevo «{save}» para añadirla de todos modos.`,
+      kbdHint: `Atajos: / buscar · n añadir una entrada`,
+      sortAuthor: `Autor A–Z`,
       plate: `Archivo personal · sin cuenta`,
       title: `Archivo y Galería de LinkedIn`,
       subtitle: `publicaciones guardadas manualmente + publicaciones públicas mediante embed oficial`,
@@ -577,6 +642,16 @@
     },
     pt: {
       locale: `pt-PT`,
+      countLine: `{n} de {m} entradas`,
+      mdBtn: `Exportar Markdown`,
+      toastMdDownloaded: `Markdown transferido: {n} entradas.`,
+      toastMdEmpty: `Não há entradas para exportar.`,
+      copyAction: `Copiar`,
+      toastCopied: `Copiado para a área de transferência.`,
+      toastCopyFail: `Não foi possível copiar.`,
+      errorDuplicate: `Já existe uma entrada com esta ligação. Prima novamente «{save}» para a adicionar mesmo assim.`,
+      kbdHint: `Atalhos: / pesquisar · n adicionar uma entrada`,
+      sortAuthor: `Autor A–Z`,
       plate: `Arquivo pessoal · sem conta`,
       title: `Arquivo e Galeria do LinkedIn`,
       subtitle: `publicações guardadas manualmente + publicações públicas via embed oficial`,
@@ -642,6 +717,16 @@
     },
     de: {
       locale: `de-DE`,
+      countLine: `{n} von {m} Einträgen`,
+      mdBtn: `Markdown exportieren`,
+      toastMdDownloaded: `Markdown heruntergeladen: {n} Einträge.`,
+      toastMdEmpty: `Keine Einträge zum Exportieren.`,
+      copyAction: `Kopieren`,
+      toastCopied: `In die Zwischenablage kopiert.`,
+      toastCopyFail: `Kopieren nicht möglich.`,
+      errorDuplicate: `Ein Eintrag mit diesem Link existiert bereits. Drücke erneut „{save}“, um ihn trotzdem hinzuzufügen.`,
+      kbdHint: `Tastenkürzel: / Suche · n Eintrag hinzufügen`,
+      sortAuthor: `Autor A–Z`,
       plate: `Persönliche Ablage · ohne Konto`,
       title: `LinkedIn-Archiv & Galerie`,
       subtitle: `manuell gespeicherte Beiträge + öffentliche Beiträge per offiziellem Embed`,
@@ -900,6 +985,9 @@
       out = out.filter(function (item) { return (item.tags || []).indexOf(state.activeTag) !== -1; });
     }
     out.sort(function (a, b) {
+      if (state.sort === 'author') {
+        return fold(a.author || a.note || '').localeCompare(fold(b.author || b.note || ''), state.lang) || (new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
+      }
       var da = new Date(a.dateAdded).getTime();
       var db = new Date(b.dateAdded).getTime();
       return state.sort === 'newest' ? db - da : da - db;
@@ -932,7 +1020,8 @@
     tags.forEach(function (tag) {
       var chip = document.createElement('button');
       chip.className = 'tag-chip' + (state.activeTag === tag ? ' active' : '');
-      chip.textContent = tag;
+      var cnt = list.filter(function (it) { return (it.tags || []).indexOf(tag) !== -1; }).length;
+      chip.textContent = tag + ' (' + cnt + ')';
       chip.addEventListener('click', function () { state.activeTag = (state.activeTag === tag ? null : tag); render(); });
       row.appendChild(chip);
     });
@@ -944,6 +1033,7 @@
     var list = state.activeTab === 'archive' ? state.archive : state.gallery;
     var filtered = getFilteredSorted(list);
     grid.innerHTML = '';
+    document.getElementById('countLine').textContent = list.length ? t('countLine').replace('{n}', filtered.length).replace('{m}', list.length) : '';
 
     if (!list.length) {
       emptyState.hidden = false; grid.hidden = true;
@@ -975,6 +1065,7 @@
           '<button class="expand-btn" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('expand')) + '</button>' +
           '<div class="card-tags">' + tagsHtml + '</div>' +
           '<div class="card-actions">' + originalLink +
+            '<button data-action="copy" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('copyAction')) + '</button>' +
             '<button data-action="edit" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('editAction')) + '</button>' +
             '<button data-action="delete" data-id="' + escapeHtml(item.id) + '">' + escapeHtml(t('deleteAction')) + '</button>' +
           '</div>';
@@ -1005,6 +1096,7 @@
     var actionBtn = e.target.closest('[data-action]');
     if (!actionBtn) return;
     var id = actionBtn.dataset.id;
+    if (actionBtn.dataset.action === 'copy') copyEntry(id);
     if (actionBtn.dataset.action === 'edit') openEditDialog(id);
     if (actionBtn.dataset.action === 'delete') openConfirmDelete(id);
   });
@@ -1045,7 +1137,7 @@
   var entryForm = document.getElementById('entryForm');
   var formError = document.getElementById('formError');
 
-  function resetForm() { entryForm.reset(); formError.hidden = true; state.editingId = null; }
+  function resetForm() { entryForm.reset(); formError.hidden = true; state.editingId = null; state.dupOk = null; }
 
   function openAddDialog() {
     resetForm();
@@ -1089,6 +1181,10 @@
     if (state.activeTab === 'archive') {
       var content = document.getElementById('f-content').value.trim();
       if (!content) { formError.textContent = t('errorContentRequired'); formError.hidden = false; document.getElementById('f-content').focus(); return; }
+      var urlA = safeHttpUrl(document.getElementById('f-url').value.trim());
+      if (urlA && state.dupOk !== urlA && state.archive.some(function (x) { return x.url === urlA && x.id !== state.editingId; })) {
+        state.dupOk = urlA; formError.textContent = t('errorDuplicate').replace('{save}', t('saveBtn')); formError.hidden = false; return;
+      }
       var existingA = state.editingId ? state.archive.find(function (x) { return x.id === state.editingId; }) : null;
       var entryA = {
         id: state.editingId || generateId(),
@@ -1113,6 +1209,9 @@
         formError.textContent = t('errorInvalidEmbed');
         formError.hidden = false;
         return;
+      }
+      if (state.dupOk !== embedSrc && state.gallery.some(function (x) { return x.embedSrc === embedSrc && x.id !== state.editingId; })) {
+        state.dupOk = embedSrc; formError.textContent = t('errorDuplicate').replace('{save}', t('saveBtn')); formError.hidden = false; return;
       }
       var existingG = state.editingId ? state.gallery.find(function (x) { return x.id === state.editingId; }) : null;
       var entryG = {
@@ -1198,6 +1297,70 @@
     reader.onerror = function () { showToast(t('toastImportFail')); };
     reader.readAsText(file);
     e.target.value = '';
+  });
+
+  // ---------- copy entry / Markdown export / shortcuts ----------
+  function entryAsText(item) {
+    var parts = [];
+    if (item.author) parts.push(item.author);
+    if (item.title) parts.push(item.title);
+    if (item.content) parts.push(item.content);
+    if (item.url) parts.push(item.url);
+    return parts.join('\n\n');
+  }
+  function copyText(text) {
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+      ta.remove();
+      showToast(t(ok ? 'toastCopied' : 'toastCopyFail'));
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { showToast(t('toastCopied')); }, fallback);
+    } else { fallback(); }
+  }
+  function copyEntry(id) {
+    var item = state.archive.find(function (x) { return x.id === id; });
+    if (item) copyText(entryAsText(item));
+  }
+  function mdLine(x) { return String(x || '').replace(/\r?\n/g, ' ').trim(); }
+  function buildMarkdown(list, type) {
+    var out = ['# ' + t('title'), ''];
+    list.forEach(function (item) {
+      var head = type === 'archive' ? (item.author || t('authorUnknown')) + (item.title ? ' — ' + item.title : '') : (item.note || item.url || item.embedSrc);
+      out.push('## ' + mdLine(head), '');
+      var meta = [];
+      if (item.datePosted) meta.push(item.datePosted);
+      meta.push(item.dateAdded.slice(0, 10));
+      out.push('*' + meta.join(' · ') + '*', '');
+      if (type === 'archive') out.push(String(item.content).split('\n').map(function (l) { return '> ' + l; }).join('\n'), '');
+      var link = item.url || (type === 'gallery' ? item.embedSrc : '');
+      if (link) out.push('<' + link + '>', '');
+      if (item.tags && item.tags.length) out.push(item.tags.map(function (g) { return '`' + g.replace(/`/g, "'") + '`'; }).join(' '), '');
+    });
+    return out.join('\n');
+  }
+  document.getElementById('mdBtn').addEventListener('click', function () {
+    var type = state.activeTab;
+    var list = getFilteredSorted(state[type]);
+    if (!list.length) { showToast(t('toastMdEmpty')); return; }
+    var blob = new Blob([buildMarkdown(list, type)], { type: 'text/markdown;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'arhiva-linkedin-' + type + '-' + new Date().toISOString().slice(0, 10) + '.md';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    showToast(t('toastMdDownloaded').replace('{n}', list.length));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+    if (document.querySelector('dialog[open]')) return;
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || (e.target && e.target.isContentEditable)) return;
+    if (e.key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+    else if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openAddDialog(); }
   });
 
   // ---------- init ----------

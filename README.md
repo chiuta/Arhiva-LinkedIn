@@ -19,6 +19,11 @@ Două file: **Arhivă** (text, autor, link, tag-uri, lipite de tine din postări
 Verificate în cod:
 - Adăugare / editare / ștergere (cu confirmare) de intrări, în ambele file; tag-uri, filtrare după tag, căutare (fără diacritice și majuscule), sortare după dată.
 - Galerie: acceptă codul iframe „Embed this post", un URN `urn:li:activity|share:…` sau un link de postare cu `-activity-<număr>-`; construiește adresa `https://www.linkedin.com/embed/feed/update/...`; adresele de alte domenii sunt respinse.
+- Contor „N din M intrări”, număr de intrări pe fiecare tag, sortare și după autor (A–Z).
+- Export Markdown al listei filtrate din fila activă; buton „Copiază” pe intrările din Arhivă (text, titlu, link).
+- Avertisment la salvarea unui link deja existent (se poate salva oricum la a doua apăsare).
+- Scurtături de tastatură: `/` pentru căutare, `n` pentru o intrare nouă (când focusul nu este într-un câmp de text).
+- Stil de tipărire: se tipăresc doar cardurile Arhivei, fără bară de instrumente.
 - Backup JSON (descărcare/încărcare); la import intrările sunt validate și cele cu `id` deja existent sunt ignorate.
 - Temă deschisă/întunecată, 7 limbi (RO, EN, FR, IT, ES, PT, DE).
 
@@ -49,6 +54,11 @@ Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează c
 
 ## Istoric / Changelog
 
+### 11 octombrie 2026 (a doua intrare)
+- Politica CSP: `script-src` cu hash în loc de `'unsafe-inline'` (aplicația nu avea atribute `on*` inline).
+- Funcții noi: export Markdown, copiere intrare, contor și numărători pe tag-uri, sortare după autor, avertisment pentru linkuri duplicate, scurtături de tastatură, stil de tipărire; textele noi sunt traduse în toate cele 7 limbi.
+- Captura de ecran actualizată (butonul „Exportă Markdown”, contorul și acțiunea „Copiază”).
+
 ### 11 octombrie 2026
 - Accesibilitate: conținutul principal este încadrat în <main> (axe: 0 violări).
 - Salvarea unei intrări goale afișează acum mesajul de eroare ca alertă anunțată de cititoarele de ecran și mută focusul în câmpul „Conținut”.
@@ -63,4 +73,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## English summary
 
-A single-file, unofficial notebook for LinkedIn posts: an Archive tab for text you paste manually, and a Gallery tab that shows public posts through LinkedIn's official embed iframe. It does not scrape LinkedIn or use its API. Data is kept in localStorage; the Gallery contacts www.linkedin.com (which sees your IP and the post address). 7 UI languages, JSON backup. License not yet declared.
+A single-file, unofficial notebook for LinkedIn posts: an Archive tab for text you paste manually, and a Gallery tab that shows public posts through LinkedIn's official embed iframe. It does not scrape LinkedIn or use its API. Data is kept in localStorage; the Gallery contacts www.linkedin.com (which sees your IP and the post address). 7 UI languages, JSON backup, Markdown export, copy-entry, duplicate-link warning, keyboard shortcuts (/ and n), print stylesheet. License not yet declared.
