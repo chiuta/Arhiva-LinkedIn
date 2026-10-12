@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-6pdNYw7PHJnp8yLs3GzGvlGJcsR+dW1LP0YZZo8qhX0='; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
+<meta name="application-version" content="1.0.0">
+<meta name="last-updated" content="2026-10-12">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-CpmgvWE2koDooUyGHCI82in6OEm+M3au6xrGdNqoDVE='; style-src 'unsafe-inline'; img-src data: blob:; frame-src https://www.linkedin.com; base-uri 'none'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="Arhivă personală de postări LinkedIn salvate manual și galerie de postări publice prin embed oficial LinkedIn. Datele rămân în browser; galeria încarcă conținut de la LinkedIn.">
 <title>Arhivă &amp; Galerie LinkedIn — clipe salvate fără cont</title>
@@ -214,6 +216,7 @@
 
 <footer class="site-footer">
   <p data-i18n="footerText">Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.</p>
+  <p style="margin:.5rem 0 0"><span data-i18n="verLabel">Versiune</span> <span id="app-version">v 1.0.0 · 2026-10-12</span></p>
 </footer>
 
 <dialog id="entryDialog">
@@ -292,6 +295,7 @@
       importBtn: `Încarcă backup / CSV`,
       tagAll: `Toate`,
       fabAddLabel: `Adaugă o clipire nouă`,
+      verLabel: `Versiune`,
       footerText: `Datele tale (arhiva, linkurile, notele) rămân în acest browser (localStorage); aplicația nu are server și nu face statistici. Atenție: fiecare postare din Galerie este încărcată de la LinkedIn (iframe oficial), deci LinkedIn primește adresa ta IP și adresa postării afișate, iar LinkedIn poate seta cookie-uri proprii în acel cadru.`,
       dialogTitleAddArchive: `Adaugă în arhivă`,
       dialogTitleAddGallery: `Adaugă în galerie`,
@@ -368,6 +372,7 @@
       importBtn: `Load backup / CSV`,
       tagAll: `All`,
       fabAddLabel: `Add a new entry`,
+      verLabel: `Version`,
       footerText: `Your data (archive, links, notes) stays in this browser (localStorage); the app has no server and no analytics. Note: each post in the Gallery is loaded from LinkedIn (official embed iframe), so LinkedIn receives your IP address and the address of the displayed post, and may set its own cookies inside that frame.`,
       dialogTitleAddArchive: `Add to archive`,
       dialogTitleAddGallery: `Add to gallery`,
@@ -444,6 +449,7 @@
       importBtn: `Charger sauvegarde / CSV`,
       tagAll: `Tous`,
       fabAddLabel: `Ajouter une nouvelle entrée`,
+      verLabel: `Version`,
       footerText: `Vos données (archive, liens, notes) restent dans ce navigateur (localStorage) ; l'application n'a ni serveur ni statistiques. Attention : chaque publication de la Galerie est chargée depuis LinkedIn (iframe officiel) ; LinkedIn reçoit donc votre adresse IP et l'adresse de la publication affichée, et peut déposer ses propres cookies dans ce cadre.`,
       dialogTitleAddArchive: `Ajouter à l'archive`,
       dialogTitleAddGallery: `Ajouter à la galerie`,
@@ -520,6 +526,7 @@
       importBtn: `Carica backup / CSV`,
       tagAll: `Tutti`,
       fabAddLabel: `Aggiungi una nuova voce`,
+      verLabel: `Versione`,
       footerText: `I tuoi dati (archivio, link, note) restano in questo browser (localStorage); l'app non ha server né statistiche. Attenzione: ogni post della Galleria viene caricato da LinkedIn (iframe ufficiale), quindi LinkedIn riceve il tuo indirizzo IP e l'indirizzo del post mostrato e può impostare propri cookie in quel riquadro.`,
       dialogTitleAddArchive: `Aggiungi all'archivio`,
       dialogTitleAddGallery: `Aggiungi alla galleria`,
@@ -596,6 +603,7 @@
       importBtn: `Cargar copia / CSV`,
       tagAll: `Todos`,
       fabAddLabel: `Añadir una nueva entrada`,
+      verLabel: `Versión`,
       footerText: `Tus datos (archivo, enlaces, notas) permanecen en este navegador (localStorage); la aplicación no tiene servidor ni estadísticas. Atención: cada publicación de la Galería se carga desde LinkedIn (iframe oficial), por lo que LinkedIn recibe tu dirección IP y la dirección de la publicación mostrada, y puede establecer sus propias cookies en ese marco.`,
       dialogTitleAddArchive: `Añadir al archivo`,
       dialogTitleAddGallery: `Añadir a la galería`,
@@ -672,6 +680,7 @@
       importBtn: `Carregar cópia / CSV`,
       tagAll: `Todas`,
       fabAddLabel: `Adicionar uma nova entrada`,
+      verLabel: `Versão`,
       footerText: `Os teus dados (arquivo, links, notas) permanecem neste navegador (localStorage); a aplicação não tem servidor nem estatísticas. Atenção: cada publicação da Galeria é carregada a partir do LinkedIn (iframe oficial), pelo que o LinkedIn recebe o teu endereço IP e o endereço da publicação apresentada e pode definir os seus próprios cookies nesse quadro.`,
       dialogTitleAddArchive: `Adicionar ao arquivo`,
       dialogTitleAddGallery: `Adicionar à galeria`,
@@ -748,6 +757,7 @@
       importBtn: `Backup / CSV laden`,
       tagAll: `Alle`,
       fabAddLabel: `Neuen Eintrag hinzufügen`,
+      verLabel: `Version`,
       footerText: `Deine Daten (Ablage, Links, Notizen) bleiben in diesem Browser (localStorage); die App hat keinen Server und keine Statistik. Achtung: Jeder Beitrag in der Galerie wird von LinkedIn geladen (offizieller Embed-iframe); LinkedIn erhält dadurch deine IP-Adresse und die Adresse des angezeigten Beitrags und kann in diesem Frame eigene Cookies setzen.`,
       dialogTitleAddArchive: `Zum Archiv hinzufügen`,
       dialogTitleAddGallery: `Zur Galerie hinzufügen`,

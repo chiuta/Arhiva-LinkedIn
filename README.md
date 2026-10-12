@@ -4,7 +4,7 @@ Un singur fișier HTML în care îți păstrezi local note despre postări Linke
 
 **Live:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-**Ultima actualizare:** 11 octombrie 2026
+**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
 
 ![Captura de ecran](screenshot.png)
 
@@ -54,6 +54,9 @@ Verificate în cod:
 Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează complet offline; Galeria are nevoie de internet.
 
 ## Istoric / Changelog
+
+### 12 octombrie 2026 (v1.0.0)
+- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 
 ### 11 octombrie 2026 (a treia intrare)
 - Import CSV în Arhivă, cu detectarea separatorului și a coloanelor după antet, omiterea duplicatelor și mesaje în cele 7 limbi; mesajul de eroare de import menționează acum și formatul CSV.
