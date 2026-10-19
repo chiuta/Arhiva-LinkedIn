@@ -85,6 +85,6 @@ MIT — vezi fișierul [LICENSE](LICENSE).
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
-## English summary
+## Rezumat
 
-A single-file, unofficial notebook for LinkedIn posts: an Archive tab for text you paste manually, and a Gallery tab that shows public posts through LinkedIn's official embed iframe. It does not scrape LinkedIn or use its API. Data is kept in localStorage; the Gallery contacts www.linkedin.com (which sees your IP and the post address). 8 UI languages, JSON backup, Markdown export, copy-entry, duplicate-link warning, keyboard shortcuts (/ and n), print stylesheet. License: MIT (see LICENSE).
+Un caiet neoficial într-un singur fișier pentru postări LinkedIn: o filă Arhivă pentru textul lipit manual și o filă Galerie care arată postări publice prin iframe-ul oficial de încorporare LinkedIn. Nu extrage date de pe LinkedIn și nu folosește API-ul acestuia. Datele se păstrează în localStorage; Galeria contactează www.linkedin.com (care vede adresa ta IP și adresa postării). 8 limbi de interfață, copie de siguranță JSON, export Markdown, copiere intrare, avertisment pentru linkuri duplicate, scurtături de tastatură (/ și n), foaie de stil pentru tipărire. Licență: MIT (vezi LICENSE).
