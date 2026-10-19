@@ -10,7 +10,7 @@ Egyetlen HTML-fájl, amelyben helyben tárolhatsz jegyzeteket LinkedIn-bejegyzé
 
 **Online alkalmazás:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 *(A képernyőkép bemutatás céljából felvett példabejegyzéseket tartalmaz.)*
 

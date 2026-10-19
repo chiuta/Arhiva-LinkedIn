@@ -10,7 +10,7 @@ A single HTML file in which you keep local notes about LinkedIn posts (copied ma
 
 **Live app:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 *(The screenshot contains sample entries added for demonstration.)*
 

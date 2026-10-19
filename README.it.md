@@ -10,7 +10,7 @@ Un unico file HTML in cui conservi localmente note sui post di LinkedIn (copiate
 
 **App online:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 *(La schermata contiene voci di esempio inserite a scopo dimostrativo.)*
 

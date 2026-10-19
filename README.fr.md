@@ -10,7 +10,7 @@ Un seul fichier HTML dans lequel vous conservez localement des notes sur des pub
 
 **Application en ligne :** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Capture d'écran](screenshot.png)
+![Capture d'écran](screenshot.fr.png)
 
 *(La capture contient des entrées d'exemple ajoutées pour la démonstration.)*
 

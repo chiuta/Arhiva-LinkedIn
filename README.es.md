@@ -10,7 +10,7 @@ Un único archivo HTML en el que guardas localmente notas sobre publicaciones de
 
 **Aplicación en línea:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 *(La captura contiene entradas de ejemplo introducidas para la demostración.)*
 

@@ -10,7 +10,7 @@ Eine einzige HTML-Datei, in der du lokal Notizen zu LinkedIn-Beiträgen (manuell
 
 **Online-App:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 *(Der Screenshot enthält Beispieleinträge, die zu Demonstrationszwecken eingefügt wurden.)*
 

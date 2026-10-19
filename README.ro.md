@@ -10,7 +10,7 @@ Un singur fișier HTML în care îți păstrezi local note despre postări Linke
 
 **Live:** https://chiuta.github.io/Arhiva-LinkedIn/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 *(Captura conține intrări de exemplu introduse pentru demonstrație.)*
 
