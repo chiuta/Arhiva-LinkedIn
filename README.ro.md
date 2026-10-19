@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.1.0 · **Ultima actualizare:** 2026-10-14
+**Versiune:** 1.2.0 · **Ultima actualizare:** 2026-10-19
+
+Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Un singur fișier HTML în care îți păstrezi local note despre postări LinkedIn (copiate manual) și o galerie de postări publice afișate prin embed-ul oficial LinkedIn.
 
@@ -28,7 +30,7 @@ Verificate în cod:
 - Stil de tipărire: se tipăresc doar cardurile Arhivei, fără bară de instrumente.
 - Import CSV în Arhivă (butonul „Încarcă backup / CSV”): coloana de text este obligatorie (`content`, `text`, `commentary` sau `ShareCommentary`); opțional `url`/`link`/`ShareLink`, `author`, `title`, `date`, `tags`; separator `,` sau `;`, câmpuri între ghilimele; duplicatele (același link și text) și rândurile fără text sunt omise, iar linkurile non-http(s) sunt ignorate. Util pentru a prelua în bloc note dintr-un tabel propriu sau dintr-un export CSV.
 - Backup JSON (descărcare/încărcare); la import intrările sunt validate și cele cu `id` deja existent sunt ignorate.
-- Temă deschisă/întunecată, 7 limbi (RO, EN, FR, IT, ES, PT, DE).
+- Temă deschisă/întunecată, 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU).
 
 ## Manual de utilizare
 
@@ -85,4 +87,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## English summary
 
-A single-file, unofficial notebook for LinkedIn posts: an Archive tab for text you paste manually, and a Gallery tab that shows public posts through LinkedIn's official embed iframe. It does not scrape LinkedIn or use its API. Data is kept in localStorage; the Gallery contacts www.linkedin.com (which sees your IP and the post address). 7 UI languages, JSON backup, Markdown export, copy-entry, duplicate-link warning, keyboard shortcuts (/ and n), print stylesheet. License: MIT (see LICENSE).
+A single-file, unofficial notebook for LinkedIn posts: an Archive tab for text you paste manually, and a Gallery tab that shows public posts through LinkedIn's official embed iframe. It does not scrape LinkedIn or use its API. Data is kept in localStorage; the Gallery contacts www.linkedin.com (which sees your IP and the post address). 8 UI languages, JSON backup, Markdown export, copy-entry, duplicate-link warning, keyboard shortcuts (/ and n), print stylesheet. License: MIT (see LICENSE).
