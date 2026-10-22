@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.1 · **Última atualização:** 2026-10-22
+**Versão:** 1.2.2 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,9 @@ Verificadas no código:
 Descarrega `index.html` e abre-o num navegador. O separador Arquivo funciona totalmente offline; a Galeria precisa de internet.
 
 ## Histórico / Changelog
+
+### 1.2.2 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600 000 iterações, proteção anti-clickjacking
 
 ### 1.2.1 — 2026-10-22
 - Os embeds da Galeria carregam agora apenas ao clicar: abrir a aplicação ou o separador Galeria já não contacta o LinkedIn; cada publicação só carrega ao premir «Carregar a publicação» (com uma nota de que o LinkedIn passa a ver o seu IP).
