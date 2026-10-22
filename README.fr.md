@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.2.0 · **Dernière mise à jour :** 2026-10-19
+**Version :** 1.2.1 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,10 @@ Vérifiées dans le code :
 Téléchargez `index.html` et ouvrez-le dans un navigateur. L'onglet Archive fonctionne entièrement hors ligne ; la Galerie a besoin d'Internet.
 
 ## Historique / Changelog
+
+### 1.2.1 — 2026-10-22
+- Les embeds de la Galerie se chargent désormais au clic : ouvrir l'application ou l'onglet Galerie ne contacte plus LinkedIn ; chaque publication ne se charge qu'après « Charger la publication » (avec une note indiquant que LinkedIn voit alors votre IP).
+- Mobile : aucun texte sous 12 px et cibles tactiles d'au moins 24 px (WCAG 2.5.8).
 
 ### 1.1.0 — 2026-10-14
 - Sauvegarde et étiquetage des données (fff-kit).

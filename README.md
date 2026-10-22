@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Last updated:** 2026-10-19
+**Version:** 1.2.1 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,10 @@ Verified in the code:
 Download `index.html` and open it in a browser. The Archive tab works fully offline; the Gallery needs internet.
 
 ## History / Changelog
+
+### 1.2.1 — 2026-10-22
+- Gallery embeds are now click-to-load: opening the app or the Gallery tab no longer contacts LinkedIn; each post loads only when you press "Load post" (with a note that LinkedIn then sees your IP).
+- Mobile: no text below 12 px and touch targets of at least 24 px (WCAG 2.5.8).
 
 ### 1.1.0 — 2026-10-14
 - Data backup and labelling (fff-kit).

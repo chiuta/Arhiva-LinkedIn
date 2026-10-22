@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-19
+**Verzió:** 1.2.1 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,10 @@ A kódban ellenőrizve:
 Töltsd le az `index.html` fájlt, és nyisd meg egy böngészőben. Az Archívum lap teljesen offline működik; a Galériához internet kell.
 
 ## Előzmények / Changelog
+
+### 1.2.1 — 2026-10-22
+- A Galéria beágyazásai mostantól csak kattintásra töltődnek be: az alkalmazás vagy a Galéria fül megnyitása már nem veszi fel a kapcsolatot a LinkedIn-nel; minden bejegyzés csak a „Bejegyzés betöltése” gombra töltődik be (jelzéssel, hogy ekkor a LinkedIn látja az IP-címedet).
+- Mobil: nincs 12 px alatti szöveg, az érintési célpontok legalább 24 px-esek (WCAG 2.5.8).
 
 ### 1.1.0 — 2026-10-14
 - Adatok biztonsági mentése és címkézése (fff-kit).

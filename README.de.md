@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 1.2.1 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,10 @@ Im Code verifiziert:
 Lade `index.html` herunter und öffne sie in einem Browser. Der Tab Archiv funktioniert vollständig offline; die Galerie benötigt Internet.
 
 ## Verlauf / Changelog
+
+### 1.2.1 — 2026-10-22
+- Einbettungen in der Galerie werden jetzt erst per Klick geladen: Das Öffnen der App oder des Galerie-Tabs kontaktiert LinkedIn nicht mehr; jeder Beitrag lädt erst nach „Beitrag laden“ (mit Hinweis, dass LinkedIn dann deine IP sieht).
+- Mobil: kein Text unter 12 px und Touch-Ziele von mindestens 24 px (WCAG 2.5.8).
 
 ### 1.1.0 — 2026-10-14
 - Datensicherung und Datenkennzeichnung (fff-kit).
