@@ -24,8 +24,8 @@
     "lka_lang_v1",
     "lka_theme_v1"
   ],
-  "sizeBytes": 232761,
-  "sha256": "a6664121bb9612ab264986da325e03474bad5e61f2b270f5fc7713439320c41a",
+  "sizeBytes": 233296,
+  "sha256": "010d788db9b31abcf34f482b426c090850fdb19968e8749e9fcf074eb942a50e",
   "csp": {
     "present": true,
     "directives": {
