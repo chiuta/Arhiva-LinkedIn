@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.4 · **Last updated:** 2026-10-23
+**Version:** 1.2.5 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,6 +58,12 @@ Verified in the code:
 Download `index.html` and open it in a browser. The Archive tab works fully offline; the Gallery needs internet.
 
 ## History / Changelog
+
+### 1.2.5 — 2026-10-23
+- Fix: when `localStorage` is full or blocked, saving/importing/deleting no longer ends with a misleading "success" message (the storage-error message is now the one that stays)
+- Fix: a JSON file with neither `archive` nor `gallery` is rejected instead of reporting "import successful +0"
+- Hardening: gallery embed addresses keep only the `?collapsed=<digit>` parameter
+- Touch targets: 24 px minimum, 44 px on touch screens; `app.json` now lists the `localStorage` keys
 
 ### 1.2.3 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size
