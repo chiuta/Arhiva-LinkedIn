@@ -63,6 +63,7 @@ Download `index.html` and open it in a browser. The Archive tab works fully offl
 - Fix: when `localStorage` is full or blocked, saving/importing/deleting no longer ends with a misleading "success" message (the storage-error message is now the one that stays)
 - Fix: a JSON file with neither `archive` nor `gallery` is rejected instead of reporting "import successful +0"
 - Hardening: gallery embed addresses keep only the `?collapsed=<digit>` parameter
+- Hardening: a saved language such as `constructor` (inherited object key) is no longer accepted, so `<html lang>` never gets an invalid value
 - Touch targets: 24 px minimum, 44 px on touch screens; `app.json` now lists the `localStorage` keys
 
 ### 1.2.3 — 2026-10-22
