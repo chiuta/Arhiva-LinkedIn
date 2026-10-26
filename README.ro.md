@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.5 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -31,6 +31,7 @@ Verificate în cod:
 - Import CSV în Arhivă (butonul „Încarcă backup / CSV”): coloana de text este obligatorie (`content`, `text`, `commentary` sau `ShareCommentary`); opțional `url`/`link`/`ShareLink`, `author`, `title`, `date`, `tags`; separator `,` sau `;`, câmpuri între ghilimele; duplicatele (același link și text) și rândurile fără text sunt omise, iar linkurile non-http(s) sunt ignorate. Util pentru a prelua în bloc note dintr-un tabel propriu sau dintr-un export CSV.
 - Backup JSON (descărcare/încărcare); la import intrările sunt validate și cele cu `id` deja existent sunt ignorate.
 - Temă deschisă/întunecată, 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU).
+- **Jurnal de integritate (2.0.0):** fiecare notă din Arhivă primește la salvare o amprentă SHA-256, înregistrată într-un jurnal local înlănțuit (fiecare înregistrare include hash-ul precedentei). Cardul arată „sigilat” sau „modificată după sigiliu”; dialogul „Jurnal de integritate” verifică lanțul și arată capul lanțului. Exportul Markdown are frontmatter și o linie de integritate pe notă; backup-ul JSON include jurnalul. Limită: cine are acces la browser poate rescrie lanțul — păstrează separat capul lanțului pentru o dovadă mai puternică.
 
 ## Manual de utilizare
 

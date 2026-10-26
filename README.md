@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.5 · **Last updated:** 2026-10-26
+**Version:** 2.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -31,6 +31,7 @@ Verified in the code:
 - CSV import into the Archive ("Load backup / CSV" button): the text column is mandatory (`content`, `text`, `commentary` or `ShareCommentary`); optional `url`/`link`/`ShareLink`, `author`, `title`, `date`, `tags`; `,` or `;` separator, quoted fields; duplicates (same link and text) and rows without text are skipped, and non-http(s) links are ignored. Useful for bulk-importing notes from your own spreadsheet or from a CSV export.
 - JSON backup (download/upload); on import, entries are validated and those with an already existing `id` are ignored.
 - Light/dark theme, 8 languages (RO, EN, FR, IT, ES, PT, DE, HU).
+- **Integrity journal (2.0.0):** every Archive note gets a SHA-256 fingerprint on save, recorded in a local hash-chained journal. Cards show “sealed” or “modified after sealing”; the “Integrity journal” dialog verifies the chain and shows its head. Markdown export has frontmatter and a per-note integrity line; the JSON backup includes the journal. Limit: anyone with access to the browser can rewrite the chain — keep the chain head elsewhere for stronger proof.
 
 ## User guide
 
