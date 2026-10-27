@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.1.0 · **Last updated:** 2026-10-27
+**Version:** 2.2.0 · **Last updated:** 2026-10-27
 
 **Status:** stable · **Offline:** complete for the Archive; the Gallery needs internet (loads LinkedIn's official embed, only after you press "Load post").
 
@@ -36,6 +36,7 @@ Verified in the code:
 - **Integrity journal (2.0.0):** every Archive note gets a SHA-256 fingerprint on save, recorded in a local hash-chained journal. Cards show “sealed” or “modified after sealing”; the “Integrity journal” dialog verifies the chain and shows its head. Markdown export has frontmatter and a per-note integrity line; the JSON backup includes the journal. Limit: anyone with access to the browser can rewrite the chain — keep the chain head elsewhere for stronger proof.
 - **Timeline by author (2.1.0):** the “Timeline by author” button groups the Archive notes by author (diacritic- and case-insensitive) and lists each author's notes in chronological order (post date, or the date added when the post date is missing). It follows the active search and tag, and an author can be applied as a filter with one click.
 - **Search (2.1.0):** several terms are combined with AND and are matched across author, title, text, note, link and tags (full-text over everything you have saved).
+- **Tag manager (2.2.0):** the "Manage tags" button (visible when tags exist) renames a tag across all entries of the current tab, merges it into an existing one if the new name is already used, or deletes it from all entries (two clicks to confirm; the text stays). In the Archive, every modified entry gets an `edit` record in the integrity journal, so the chain stays valid and the seals stay current. Names: at most 60 characters, no commas. Tags are still free text and case-sensitive (`IT` and `it` are different until you merge them). The active tag filter follows a renaming. UI texts in 8 languages (FR/IT/ES/PT/DE/HU machine-translated). Tags, the filter chips with counts and the tag search already existed since v1.x.
 
 ## User guide
 
@@ -64,6 +65,9 @@ Verified in the code:
 Download `index.html` and open it in a browser. The Archive tab works fully offline; the Gallery needs internet.
 
 ## History / Changelog
+
+### 2.2.0 — 2026-10-27
+- Tag manager: rename / merge / delete a tag across the entries of the current tab, with journal records in the Archive. New test: `tests/tags.test.mjs` (27 checks).
 
 ### 2.1.0 — 2026-10-27
 - Timeline by author, multi-term full-text search, in-app copyright note, `CHANGELOG.md`. Previously: v2.0.0.
