@@ -1,4 +1,4 @@
-// Teste v2.0.0: jurnal de integritate (amprente SHA-256 înlănțuite), detectarea modificărilor, export Markdown/JSON, import.
+// Teste v2.1.0: jurnal de integritate (amprente SHA-256 înlănțuite), detectarea modificărilor, export Markdown/JSON, import.
 import {createRequire as __fffCR} from 'node:module';
 import {readFileSync as __fffRF} from 'node:fs';
 import {createRequire} from 'module';
