@@ -2,6 +2,15 @@
 
 Format SemVer (MAJOR.MINOR.PATCH).
 
+## 2.2.0 — 2026-10-27
+
+Anterior: v2.1.0.
+
+- Nou: **gestionare tag-uri** (buton „Gestionează tag-uri”): redenumire, îmbinare și ștergere a unui tag în toate intrările filei curente; în Arhivă fiecare intrare modificată primește o înregistrare `edit` în jurnalul de integritate (lanțul rămâne valid, sigiliile la zi). Nume de cel mult 60 de caractere, fără virgule; filtrul activ urmărește redenumirea. Texte în 8 limbi (fr/it/es/pt/de/hu automate, nerevizuite de vorbitori nativi).
+- Tag-urile, filtrarea după tag și contoarele existau deja din v1.x; nu au fost refăcute.
+- Teste: `tests/tags.test.mjs` (27 de verificări); `timeline` și `integrity-journal` trec.
+- Nu s-a făcut: filtrare după mai multe tag-uri simultan (rămâne un singur tag activ); tag-uri ierarhice; sugestii de completare în formular; previzualizarea embed LinkedIn rămâne netestată cu rețea reală.
+
 ## 2.1.0 — 2026-10-27
 
 Anterior: v2.0.0.

@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.1.0 · **Ultima actualizare:** 2026-10-27
+**Versiune:** 2.2.0 · **Ultima actualizare:** 2026-10-27
 
 **Stare:** stabil · **Offline:** complet pentru Arhivă; Galeria cere internet (încarcă embed-ul oficial LinkedIn, doar după ce apeși „Încarcă postarea”).
 
@@ -36,6 +36,7 @@ Verificate în cod:
 - **Jurnal de integritate (2.0.0):** fiecare notă din Arhivă primește la salvare o amprentă SHA-256, înregistrată într-un jurnal local înlănțuit (fiecare înregistrare include hash-ul precedentei). Cardul arată „sigilat” sau „modificată după sigiliu”; dialogul „Jurnal de integritate” verifică lanțul și arată capul lanțului. Exportul Markdown are frontmatter și o linie de integritate pe notă; backup-ul JSON include jurnalul. Limită: cine are acces la browser poate rescrie lanțul — păstrează separat capul lanțului pentru o dovadă mai puternică.
 - **Cronologie pe autor (2.1.0):** butonul „Cronologie pe autor” grupează notele din Arhivă pe autor (fără diferențe de diacritice sau majuscule) și listează notele fiecărui autor în ordine cronologică (data postării sau, dacă lipsește, data adăugării). Respectă căutarea și tag-ul active, iar un autor poate fi aplicat ca filtru dintr-un clic.
 - **Căutare (2.1.0):** mai mulți termeni se combină cu ȘI și se caută în autor, titlu, text, notă, link și tag-uri (full-text peste tot ce ai salvat).
+- **Gestionare tag-uri (2.2.0):** butonul „Gestionează tag-uri” (vizibil când există tag-uri) redenumește un tag în toate intrările filei curente, îl îmbină cu unul existent dacă noul nume e deja folosit sau îl șterge din toate intrările (două apăsări pentru confirmare; textul rămâne). În Arhivă, fiecare intrare modificată primește o înregistrare `edit` în jurnalul de integritate, deci lanțul rămâne valid, iar sigiliile la zi. Nume: cel mult 60 de caractere, fără virgule. Tag-urile rămân text liber și sensibile la majuscule (`IT` și `it` sunt diferite până le îmbini). Filtrul de tag activ urmărește redenumirea. Texte în 8 limbi (FR/IT/ES/PT/DE/HU traduse automat). Tag-urile, chip-urile de filtrare cu contor și căutarea în tag-uri existau deja din v1.x.
 
 ## Manual de utilizare
 
@@ -64,6 +65,9 @@ Verificate în cod:
 Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează complet offline; Galeria are nevoie de internet.
 
 ## Istoric / Changelog
+
+### 2.2.0 — 2026-10-27
+- Gestionare tag-uri: redenumire / îmbinare / ștergere pe intrările filei curente, cu înregistrări în jurnal în Arhivă. Test nou: `tests/tags.test.mjs` (27 de verificări).
 
 ### 2.1.0 — 2026-10-27
 - Cronologie pe autor, căutare full-text cu mai mulți termeni, notă despre drepturile de autor în aplicație, `CHANGELOG.md`. Anterior: v2.0.0.
