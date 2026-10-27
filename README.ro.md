@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.1.0 · **Ultima actualizare:** 2026-10-27
+
+**Stare:** stabil · **Offline:** complet pentru Arhivă; Galeria cere internet (încarcă embed-ul oficial LinkedIn, doar după ce apeși „Încarcă postarea”).
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -32,6 +34,8 @@ Verificate în cod:
 - Backup JSON (descărcare/încărcare); la import intrările sunt validate și cele cu `id` deja existent sunt ignorate.
 - Temă deschisă/întunecată, 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU).
 - **Jurnal de integritate (2.0.0):** fiecare notă din Arhivă primește la salvare o amprentă SHA-256, înregistrată într-un jurnal local înlănțuit (fiecare înregistrare include hash-ul precedentei). Cardul arată „sigilat” sau „modificată după sigiliu”; dialogul „Jurnal de integritate” verifică lanțul și arată capul lanțului. Exportul Markdown are frontmatter și o linie de integritate pe notă; backup-ul JSON include jurnalul. Limită: cine are acces la browser poate rescrie lanțul — păstrează separat capul lanțului pentru o dovadă mai puternică.
+- **Cronologie pe autor (2.1.0):** butonul „Cronologie pe autor” grupează notele din Arhivă pe autor (fără diferențe de diacritice sau majuscule) și listează notele fiecărui autor în ordine cronologică (data postării sau, dacă lipsește, data adăugării). Respectă căutarea și tag-ul active, iar un autor poate fi aplicat ca filtru dintr-un clic.
+- **Căutare (2.1.0):** mai mulți termeni se combină cu ȘI și se caută în autor, titlu, text, notă, link și tag-uri (full-text peste tot ce ai salvat).
 
 ## Manual de utilizare
 
@@ -53,12 +57,16 @@ Verificate în cod:
 - Galeria arată doar ce permite LinkedIn să fie încorporat; postări șterse sau private nu se afișează.
 - Previzualizarea embed-urilor nu a putut fi testată cu rețea reală în acest repository; testele au folosit un înlocuitor local pentru cadrul LinkedIn.
 - Sandbox-ul cadrului (`allow-scripts allow-same-origin allow-popups…`) este o măsură de precauție; dacă un embed nu se afișează corect, aceasta este prima verificare.
+- **Drepturi de autor (2.1.0):** aplicația afișează acum o notă despre drepturile de autor (subsol, formularul de intrare, cronologie): postările arhivate aparțin autorilor lor; păstrează-le pentru uz personal și verifică Termenii LinkedIn, acordul autorului și legislația privind datele personale înainte de a republica sau distribui un text. Nota este informativă, nu consultanță juridică.
 
 ## Rulare locală / offline
 
 Descarcă `index.html` și deschide-l în browser. Fila Arhivă funcționează complet offline; Galeria are nevoie de internet.
 
 ## Istoric / Changelog
+
+### 2.1.0 — 2026-10-27
+- Cronologie pe autor, căutare full-text cu mai mulți termeni, notă despre drepturile de autor în aplicație, `CHANGELOG.md`. Anterior: v2.0.0.
 
 ### 1.2.3 — 2026-10-22
 - fff-kit 1.1.4: ținte tactile și text minim

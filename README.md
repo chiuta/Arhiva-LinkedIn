@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Last updated:** 2026-10-26
+**Version:** 2.1.0 · **Last updated:** 2026-10-27
+
+**Status:** stable · **Offline:** complete for the Archive; the Gallery needs internet (loads LinkedIn's official embed, only after you press "Load post").
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -32,6 +34,8 @@ Verified in the code:
 - JSON backup (download/upload); on import, entries are validated and those with an already existing `id` are ignored.
 - Light/dark theme, 8 languages (RO, EN, FR, IT, ES, PT, DE, HU).
 - **Integrity journal (2.0.0):** every Archive note gets a SHA-256 fingerprint on save, recorded in a local hash-chained journal. Cards show “sealed” or “modified after sealing”; the “Integrity journal” dialog verifies the chain and shows its head. Markdown export has frontmatter and a per-note integrity line; the JSON backup includes the journal. Limit: anyone with access to the browser can rewrite the chain — keep the chain head elsewhere for stronger proof.
+- **Timeline by author (2.1.0):** the “Timeline by author” button groups the Archive notes by author (diacritic- and case-insensitive) and lists each author's notes in chronological order (post date, or the date added when the post date is missing). It follows the active search and tag, and an author can be applied as a filter with one click.
+- **Search (2.1.0):** several terms are combined with AND and are matched across author, title, text, note, link and tags (full-text over everything you have saved).
 
 ## User guide
 
@@ -53,12 +57,16 @@ Verified in the code:
 - The Gallery shows only what LinkedIn allows to be embedded; deleted or private posts are not displayed.
 - The embed preview could not be tested with a real network in this repository; the tests used a local stand-in for the LinkedIn frame.
 - The frame's sandbox (`allow-scripts allow-same-origin allow-popups…`) is a precaution; if an embed does not display correctly, this is the first thing to check.
+- **Copyright (2.1.0):** the app now shows a copyright note (footer, entry form, timeline): archived posts belong to their authors; keep them for personal use and check LinkedIn's Terms, the author's consent and personal-data law before republishing or sharing a text. This note is information, not legal advice.
 
 ## Local / offline use
 
 Download `index.html` and open it in a browser. The Archive tab works fully offline; the Gallery needs internet.
 
 ## History / Changelog
+
+### 2.1.0 — 2026-10-27
+- Timeline by author, multi-term full-text search, in-app copyright note, `CHANGELOG.md`. Previously: v2.0.0.
 
 ### 1.2.3 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size
