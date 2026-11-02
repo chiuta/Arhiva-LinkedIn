@@ -22,8 +22,8 @@
   "storageKeys": [
     "arhiva-linkedin.journal"
   ],
-  "sizeBytes": 303691,
-  "sha256": "d3239bd5efd067438e4367bc05beacc0d8c9b3cf8e7be88955baca4c9e5da3a0",
+  "sizeBytes": 444125,
+  "sha256": "6da1b0b5938f98aca0b3a23deaba88d3c1d39d6c9ddb4ccf61ee73171ba3ce02",
   "csp": {
     "present": true,
     "directives": {
@@ -64,6 +64,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
@@ -75,6 +79,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
