@@ -22,8 +22,8 @@
   "storageKeys": [
     "arhiva-linkedin.journal"
   ],
-  "sizeBytes": 303648,
-  "sha256": "21b718b05b7b0fc5802c4c75b02c1567f04eb3b9e7caed4eea2cb89d0f2725bd",
+  "sizeBytes": 303691,
+  "sha256": "d3239bd5efd067438e4367bc05beacc0d8c9b3cf8e7be88955baca4c9e5da3a0",
   "csp": {
     "present": true,
     "directives": {
