@@ -1,4 +1,4 @@
-// Teste v2.2.0: gestionare tag-uri (redenumire, îmbinare, ștergere) cu înregistrări în jurnalul de integritate.
+// Teste v2.3.0: gestionare tag-uri (redenumire, îmbinare, ștergere) cu înregistrări în jurnalul de integritate.
 import {createRequire} from 'module';
 import path from 'path';
 import {fileURLToPath} from 'url';
