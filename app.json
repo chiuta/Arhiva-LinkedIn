@@ -2,8 +2,8 @@
   "schema": 1,
   "slug": "arhiva-linkedin",
   "name": "Arhivă & Galerie LinkedIn — clipe salvate fără cont",
-  "version": "2.3.6",
-  "updated": "2026-11-11",
+  "version": "2.3.7",
+  "updated": "2026-11-13",
   "description": "Arhivă personală de postări LinkedIn salvate manual și galerie de postări publice prin embed oficial LinkedIn. Datele rămân în browser; galeria încarcă conținut de la LinkedIn.",
   "egress": [
     {
@@ -22,8 +22,8 @@
   "storageKeys": [
     "arhiva-linkedin.journal"
   ],
-  "sizeBytes": 485854,
-  "sha256": "2f25aaa085768e0fb35df13938d53e806cf3c07a1ea0b879cd9de1ef859605c6",
+  "sizeBytes": 499431,
+  "sha256": "929fa5efd745180da789305f77e6b3d5c9de190629f215e1e0f99fb3fc9eb30c",
   "csp": {
     "present": true,
     "directives": {
@@ -64,6 +64,7 @@
       "dialog",
       "exit",
       "view",
+      "ux",
       "label",
       "bundle",
       "qr",
@@ -74,13 +75,14 @@
     ]
   },
   "kit": {
-    "version": "1.4.0",
+    "version": "1.5.0",
     "modules": [
       "core",
       "store",
       "dialog",
       "exit",
       "view",
+      "ux",
       "label",
       "bundle",
       "qr",
