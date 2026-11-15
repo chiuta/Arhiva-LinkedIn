@@ -17,18 +17,19 @@
     "clipboard",
     "serviceWorker",
     "localStorage",
-    "Web Crypto"
+    "Web Crypto",
+    "WebGL"
   ],
   "storageKeys": [
     "arhiva-linkedin.journal"
   ],
-  "sizeBytes": 499431,
-  "sha256": "929fa5efd745180da789305f77e6b3d5c9de190629f215e1e0f99fb3fc9eb30c",
+  "sizeBytes": 551438,
+  "sha256": "4d5ca5e2a66d987c41540ac84c8f12bd378c43d92f0ca51ec571aa9a361cbcb6",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×4",
+      "script-src": "sha256×5",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data: blob:",
       "frame-src": "https://www.linkedin.com",
